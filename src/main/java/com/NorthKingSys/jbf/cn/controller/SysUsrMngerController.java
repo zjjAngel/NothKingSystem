@@ -68,8 +68,8 @@ public class SysUsrMngerController {
     @GetMapping("/queryUsrInfo")
     public Result<?> queryUsrInfo(@RequestParam(value = "userId",required = false) String userId,
                                   @RequestParam(value = "roleId",required = false) String roleId,
-                                  @RequestParam(value = "pageSize") Integer pageSize,
-                                  @RequestParam(value = "pageNum") Integer pageNum
+                                  @RequestParam(value = "pageSize",required = false,defaultValue = "10") Integer pageSize,
+                                  @RequestParam(value = "pageNum",required = false,defaultValue = "1") Integer pageNum
                                   ){
         return ResultUtil.success(sysUsrMngerService.queryUsrInfo(userId,roleId,pageNum,pageSize));
     }
