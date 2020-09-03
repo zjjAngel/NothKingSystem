@@ -51,6 +51,9 @@
         <if test="username!=null and username!=''">
           and  a.user_name= #{username}
         </if>
+        <if test="password!=null">
+          and b.password=#{password}
+        </if>
       </where>
   </select>
   <insert id="insert" parameterType="com.NorthKingSys.jbf.cn.domain.UserInfo">

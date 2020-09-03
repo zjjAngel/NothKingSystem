@@ -44,3 +44,5 @@ thread-pool-factory:
   maxPoolSize: 18
   queueCapacity: 100
   keepAliveSeconds: 120
+logging.level.com.NorthKingSys.jbf.cn.mapper : debug
+
