@@ -32,7 +32,7 @@ public class CustInfoController {
      * @return
      */
     @PostMapping("/query")
-    private List<CustInfo> queryCustInfo(CustInfo custInfo){
+    private List<CustInfo> queryCustInfo(@RequestBody CustInfo custInfo){
 
         List<JbfCustInfo> jbfCustInfos = new ArrayList<>();
         List<CustInfo> queryClients = new ArrayList<>();
@@ -72,7 +72,7 @@ public class CustInfoController {
 
 
     @PostMapping("/add")
-    private String addCustInfo(CustInfo custInfo){
+    private String addCustInfo(@RequestBody CustInfo custInfo){
         String clientno = null;
 
         String maxNo = getMaxCustNo();
@@ -99,7 +99,7 @@ public class CustInfoController {
      * @param custInfo
      */
     @PostMapping("/update")
-    private void updateClientInfo(CustInfo custInfo){
+    private void updateClientInfo(@RequestBody CustInfo custInfo){
 
         JbfCustInfo jbfCustInfo = new JbfCustInfo();
         jbfCustInfo.setCustNo(custInfo.getCustno());
@@ -120,7 +120,7 @@ public class CustInfoController {
      * @param custInfo
      */
     @PostMapping("/del")
-    private void delClientInfo(CustInfo custInfo){
+    private void delClientInfo(@RequestBody  CustInfo custInfo){
 
         Integer id = Integer.valueOf(custInfo.getCustno());
         jbfCustInfoMapper.deleteByPrimaryKey(id);

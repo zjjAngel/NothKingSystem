@@ -5,10 +5,7 @@ import com.NorthKingSys.jbf.cn.mapper.JbfProductMapper;
 import com.NorthKingSys.jbf.cn.project.api.ProjectInfo;
 import com.NorthKingSys.jbf.cn.util.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 
 import java.util.ArrayList;
@@ -35,7 +32,7 @@ public class ProjectInfoController {
      * @return
      */
     @PostMapping("/add")
-    private String addProdInfo(ProjectInfo projectInfo){
+    private String addProdInfo(@RequestBody ProjectInfo projectInfo){
         String prodno = null;
         prodno = getMaxCustNo();
         int maxNo1 = Integer.valueOf(prodno);
@@ -58,7 +55,7 @@ public class ProjectInfoController {
      * @return
      */
     @PostMapping("/upd")
-    private void updProdInfo(ProjectInfo projectInfo){
+    private void updProdInfo(@RequestBody  ProjectInfo projectInfo){
         JbfProduct jbfProduct = new JbfProduct();
         jbfProduct.setProdNo(projectInfo.getProdno());
         jbfProduct.setProdName(projectInfo.getProdname());
@@ -74,7 +71,7 @@ public class ProjectInfoController {
      * @return
      */
     @PostMapping("/query")
-    private List<ProjectInfo> queryProdInfo(ProjectInfo projectInfo){
+    private List<ProjectInfo> queryProdInfo(@RequestBody  ProjectInfo projectInfo){
         List<ProjectInfo> projectInfoss = new ArrayList<>();
 
         String startTime= null;
@@ -110,7 +107,7 @@ public class ProjectInfoController {
      * @return
      */
     @PostMapping("/del")
-    private void delProdInfo(ProjectInfo projectInfo){
+    private void delProdInfo(@RequestBody  ProjectInfo projectInfo){
         jbfProductMapper.deleteByPrimaryKey(projectInfo.getProdno());
     }
 
