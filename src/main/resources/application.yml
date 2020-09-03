@@ -6,7 +6,7 @@ spring:
   thymeleaf:
     cache: false
   datasource:
-    url: jdbc:mysql://192.168.42.143:3307/jbf?characterEncoding=utf8&characterSetResults=utf8&autoReconnect=true&failOverReadOnly=false
+    url: jdbc:mysql://192.168.0.115:3306/jbf?characterEncoding=utf8&characterSetResults=utf8&autoReconnect=true&failOverReadOnly=false
     username: root
     password: 123456
   application:
@@ -37,6 +37,8 @@ pagehelper:
 mybatis:
   type-aliases-package: com.NorthKingSys.jbf.cn.mapper
   mapper-locations: classpath:mapper/*.xml
+  configuration:
+    map-underscore-to-camel-case: true
 
 thread-pool-factory:
   #IO密集型应用，线程数为2N+1
@@ -44,3 +46,8 @@ thread-pool-factory:
   maxPoolSize: 18
   queueCapacity: 100
   keepAliveSeconds: 120
+
+#com.jbf.jbfboot.Dao 将xml文件中的SQl打印出来
+logging:
+  level:
+    com.jbf.jbfboot.Dao: DEBUG
