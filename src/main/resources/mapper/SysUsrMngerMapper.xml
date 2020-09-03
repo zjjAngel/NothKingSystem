@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.NorthKingSys.jbf.cn.mapper.SysUsrMngerMapper">
+    <select id="selectUsr" resultType="map">
+         select t.user_id,t.user_name from JBF_USER t
+         <where>
+            t.user_name=#{username}
+         </where>
+    </select>
+    <insert id="insertUser" useGeneratedKeys="true" keyColumn="id">
+          insert into JBF_USER (
+            user_id,
+            user_name,
+            user_role,
+            <if test="backup!=null and backup!=''">
+                back_up,
+            </if>
+           create_time
+          )
+          values (
+            #{userId},
+            #{username},
+            #{transRole},
+            <if test="backup!=null and backup!=''">
+                #{backup},
+            </if>
+             CURRENT_TIME
+          )
+    </insert>
+
+    <insert id="insertPassWord" >
+           insert into JBF_USER_PWD(
+                user_id,
+                user_name,
+                password,
+                effect_date
+            ) values (
+                #{userId},
+                #{username},
+                #{password},
+                '72'
+           )
+    </insert>
+    <update id="updateUsrByUsrId">
+        update JBF_USER
+        <set>
+            user_name=#{username},
+            user_role=#{transRole},
+            <if test="backup!=null and backup!=''">
+                back_up=#{backup}
+            </if>
+        </set>
+        <where>
+            user_id=#{userId}
+        </where>
+    </update>
+    <update id="updateUsrByPWD">
+        update JBF_USER_PWD
+        <set>
+            user_name=#{username},
+            password= #{password}
+        </set>
+        <where>
+            user_id=#{userId}
+        </where>
+    </update>
+    <delete id="deletePwdInfo">
+        delete from JBF_USER_PWD
+        <where>
+            user_id=#{userId}
+        </where>
+    </delete>
+    <delete id="deleteUsrInfo">
+        delete from JBF_USER
+        <where>
+            user_id=#{userId}
+        </where>
+    </delete>
+    <delete id="deleteUsr">
+        delete from JBF_USER t
+         where t.USER_ROLE in
+         <foreach collection="list" item="item" separator="," open="(" close=")">
+                #{item}
+        </foreach>
+    </delete>
+    <select id="queryUsrInfo" resultType="com.NorthKingSys.jbf.cn.biz.UsrPwdInfo">
+        select t.user_id,t.user_name,t.create_time,t.user_role,
+        t.role_name,
+  <!--  r.FEIGN_IDS-->
+          p.password
+          from (
+          select a.user_id,a.user_name,a.create_time,a.user_role, b.role_name from JBF_USER a
+          left join JBF_ROLE b
+          on a.USER_ROLE=b.ROLE_ID
+        <where>
+            <if test="userId !=null and userId!=''">
+                a.user_id=#{userId}
+            </if>
+            <if test="roleId !=null and roleId !=''">
+                and a.USER_ROLE=#{roleId}
+            </if>
+        </where>
+        )  t
+        left join
+        JBF_USER_PWD p
+        on
+        t.USER_ID= p.USER_ID
+
+    </select>
+
+    <select id="querySelect" resultType="com.NorthKingSys.jbf.cn.biz.UsrPwdInfo">
+        select r.role_id,r.role_name from JBF_ROLE r
+    </select>
+    <select id="querySelectUsr" resultType="com.NorthKingSys.jbf.cn.biz.UsrPwdInfo">
+        select u.user_id,u.user_name from JBF_USER u
+    </select>
+</mapper>

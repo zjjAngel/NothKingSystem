@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.NorthKingSys.jbf.cn.mapper.MenuMngerMapper">
+    <insert id="insertMenu" useGeneratedKeys="true" keyColumn="id">
+        insert into JBF_MENU(
+        MENU_ID,
+        MENU_NAME,
+        MENU_LEVEL_PARENT,
+        MENU_LEVEL,
+        PATH,
+        <if test="BACK_UP!=null and BACK_UP!=''">
+            BACK_UP,
+        </if>
+        STATUS
+        )values (
+        #{MENU_ID},
+        #{MENU_NAME},
+        #{MENU_LEVEL_PARENT},
+        #{MENU_LEVEL},
+        #{PATH},
+        <if test="BACK_UP!=null and BACK_UP!=''">
+            #{BACK_UP},
+        </if>
+        #{STATUS}
+        )
+    </insert>
+    <update id="updateMenu">
+        update JBF_MENU
+        <set>
+        <if test="MENU_NAME!=null and MENU_NAME!=''">
+            MENU_NAME=#{MENU_NAME},
+        </if>
+         <if test="MENU_LEVEL_PARENT!=null and MENU_LEVEL_PARENT!=''">
+                MENU_LEVEL_PARENT=#{MENU_LEVEL_PARENT},
+         </if>
+          <if test="MENU_LEVEL!=null and MENU_LEVEL!=''">
+                MENU_LEVEL=#{MENU_LEVEL},
+          </if>
+            <if test="PATH!=null and PATH!=''">
+                PATH=#{PATH},
+            </if>
+            <if test="STATUS!=null and STATUS!=''">
+                STATUS=#{STATUS},
+            </if>
+        </set>
+        <where>
+            MENU_ID=#{MENU_ID}
+        </where>
+    </update>
+    <select id="selectIfexist" resultType="com.NorthKingSys.jbf.cn.biz.MenuInfo">
+        select ID,MENU_ID,MENU_NAME,MENU_LEVEL,MENU_LEVEL_DESC,
+        MENU_LEVEL_PARENT,PATH,BACK_UP,STATUS
+        from JBF_MENU
+        <where>
+        <if test="MENU_ID!=null and MENU_ID!=''">
+            MENU_ID=#{MENU_ID}
+        </if>
+        <if test="MENU_NAME!=null and MENU_NAME!=''">
+            and MENU_NAME=#{MENU_NAME}
+        </if>
+         <if test="MENU_LEVEL_PARENT!=null and MENU_LEVEL_PARENT!='' ">
+             and MENU_LEVEL_PARENT=#{MENU_LEVEL_PARENT}
+         </if>
+            <if test="status!=null">
+                and status=#{status}
+            </if>
+        </where>
+    </select>
+    <select id="queryAllMenu" resultType="com.NorthKingSys.jbf.cn.biz.MenuInfo">
+        select m.ID,m.MENU_ID,m.MENU_NAME, m.MENU_LEVEL_PARENT  from JBF_MENU m
+           <where>
+               <if test="MENU_LEVEL!=null">
+                   m.MENU_LEVEL=#{MENU_LEVEL}
+               </if>
+           </where>
+            order by m.MENU_LEVEL asc
+
+    </select>
+    <select id="queryAllMenuLevel" resultType="com.NorthKingSys.jbf.cn.biz.MenuInfo">
+         select distinct m.MENU_LEVEL  from JBF_MENU m
+            order by m.MENU_LEVEL asc
+    </select>
+    <select id="selectPerLevelMenus" resultType="com.NorthKingSys.jbf.cn.biz.MenuInfo">
+        select t.MENU_LEVEL, GROUP_CONCAT(t.MENU_ID SEPARATOR ',') MENU_IDs from JBF_MENU t GROUP BY MENU_LEVEL
+    </select>
+    <select id="selectMenusName" resultType="java.lang.String">
+        select t.MENU_NAME from JBF_MENU t
+        <where>
+            MENU_ID=#{MENU_ID}
+        </where>
+    </select>
+</mapper>

@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.NorthKingSys.jbf.cn.mapper.JbfCustInfoMapper">
+  <resultMap id="BaseResultMap" type="com.NorthKingSys.jbf.cn.domain.JbfCustInfo">
+    <id column="ID" jdbcType="INTEGER" property="id" />
+    <result column="CUST_NO" jdbcType="VARCHAR" property="custNo" />
+    <result column="CUST_NAME" jdbcType="VARCHAR" property="custName" />
+    <result column="COMPANY" jdbcType="VARCHAR" property="company" />
+    <result column="MOBILE_NO" jdbcType="VARCHAR" property="mobileNo" />
+    <result column="ADRESS" jdbcType="VARCHAR" property="adress" />
+    <result column="REGION" jdbcType="VARCHAR" property="region" />
+    <result column="RELATION_NAME" jdbcType="VARCHAR" property="relationName" />
+    <result column="RELATE_MOBIL_NO" jdbcType="VARCHAR" property="relateMobilNo" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, CUST_NO, CUST_NAME, COMPANY, MOBILE_NO, ADRESS, REGION, RELATION_NAME, RELATE_MOBIL_NO
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from JBF_CUST_INFO
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from JBF_CUST_INFO
+    where CUST_NO = #{custNo,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.NorthKingSys.jbf.cn.domain.JbfCustInfo">
+    insert into JBF_CUST_INFO (ID, CUST_NO, CUST_NAME, 
+      COMPANY, MOBILE_NO, ADRESS, 
+      REGION, RELATION_NAME, RELATE_MOBIL_NO
+      )
+    values (#{id,jdbcType=INTEGER}, #{custNo,jdbcType=VARCHAR}, #{custName,jdbcType=VARCHAR}, 
+      #{company,jdbcType=VARCHAR}, #{mobileNo,jdbcType=VARCHAR}, #{adress,jdbcType=VARCHAR}, 
+      #{region,jdbcType=VARCHAR}, #{relationName,jdbcType=VARCHAR}, #{relateMobilNo,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.NorthKingSys.jbf.cn.domain.JbfCustInfo">
+    insert into JBF_CUST_INFO
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="custNo != null">
+        CUST_NO,
+      </if>
+      <if test="custName != null">
+        CUST_NAME,
+      </if>
+      <if test="company != null">
+        COMPANY,
+      </if>
+      <if test="mobileNo != null">
+        MOBILE_NO,
+      </if>
+      <if test="adress != null">
+        ADRESS,
+      </if>
+      <if test="region != null">
+        REGION,
+      </if>
+      <if test="relationName != null">
+        RELATION_NAME,
+      </if>
+      <if test="relateMobilNo != null">
+        RELATE_MOBIL_NO,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="custNo != null">
+        #{custNo,jdbcType=VARCHAR},
+      </if>
+      <if test="custName != null">
+        #{custName,jdbcType=VARCHAR},
+      </if>
+      <if test="company != null">
+        #{company,jdbcType=VARCHAR},
+      </if>
+      <if test="mobileNo != null">
+        #{mobileNo,jdbcType=VARCHAR},
+      </if>
+      <if test="adress != null">
+        #{adress,jdbcType=VARCHAR},
+      </if>
+      <if test="region != null">
+        #{region,jdbcType=VARCHAR},
+      </if>
+      <if test="relationName != null">
+        #{relationName,jdbcType=VARCHAR},
+      </if>
+      <if test="relateMobilNo != null">
+        #{relateMobilNo,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.NorthKingSys.jbf.cn.domain.JbfCustInfo">
+    update JBF_CUST_INFO
+    <set>
+      <if test="custNo != null">
+        CUST_NO = #{custNo,jdbcType=VARCHAR},
+      </if>
+      <if test="custName != null">
+        CUST_NAME = #{custName,jdbcType=VARCHAR},
+      </if>
+      <if test="company != null">
+        COMPANY = #{company,jdbcType=VARCHAR},
+      </if>
+      <if test="mobileNo != null">
+        MOBILE_NO = #{mobileNo,jdbcType=VARCHAR},
+      </if>
+      <if test="adress != null">
+        ADRESS = #{adress,jdbcType=VARCHAR},
+      </if>
+      <if test="region != null">
+        REGION = #{region,jdbcType=VARCHAR},
+      </if>
+      <if test="relationName != null">
+        RELATION_NAME = #{relationName,jdbcType=VARCHAR},
+      </if>
+      <if test="relateMobilNo != null">
+        RELATE_MOBIL_NO = #{relateMobilNo,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where CUST_NO = #{custNo,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.NorthKingSys.jbf.cn.domain.JbfCustInfo">
+    update JBF_CUST_INFO
+    set CUST_NO = #{custNo,jdbcType=VARCHAR},
+      CUST_NAME = #{custName,jdbcType=VARCHAR},
+      COMPANY = #{company,jdbcType=VARCHAR},
+      MOBILE_NO = #{mobileNo,jdbcType=VARCHAR},
+      ADRESS = #{adress,jdbcType=VARCHAR},
+      REGION = #{region,jdbcType=VARCHAR},
+      RELATION_NAME = #{relationName,jdbcType=VARCHAR},
+      RELATE_MOBIL_NO = #{relateMobilNo,jdbcType=VARCHAR}
+    where CUST_NO = #{custNo,jdbcType=VARCHAR}
+  </update>
+  <!--add by zhujxd 20200902 新增客户信息查询-->
+  <select id="selectByClientInfo" parameterType="com.NorthKingSys.jbf.cn.domain.JbfCustInfo" resultType="com.NorthKingSys.jbf.cn.domain.JbfCustInfo">
+    select
+    <include refid="Base_Column_List" />
+    from JBF_CUST_INFO
+    where 1=1
+    <if test="custName != null and custName != ''">
+      and  CUST_NAME = #{custName,jdbcType=VARCHAR}
+    </if>
+    <if test="company != null and company != ''">
+      and COMPANY = #{company,jdbcType=VARCHAR}
+    </if>
+    <if test="relationName != null and relationName !=''">
+    and  RELATION_NAME = #{relationName,jdbcType=VARCHAR}
+    </if>
+    <if test="region != null and region !=''">
+      and REGION = #{region,jdbcType=VARCHAR}
+    </if>
+  </select>
+
+  <select id="getMaxCustNo" parameterType="java.lang.String" resultType="java.lang.String">
+    SELECT a.CUST_NO from JBF_CUST_INFO a where a.ID in (select MAX(ID) from JBF_CUST_INFO)
+  </select>
+
+
+
+</mapper>
