@@ -18,16 +18,16 @@
     from JBF_PRODUCT
     where ID = #{id,jdbcType=INTEGER}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from JBF_PRODUCT
-    where ID = #{id,jdbcType=INTEGER}
+    where PROD_NO = #{prodNo,jdbcType=VARCHAR}
   </delete>
   <insert id="insert" parameterType="com.NorthKingSys.jbf.cn.domain.JbfProduct">
     insert into JBF_PRODUCT (ID, PROD_NO, PROD_NAME, 
       PROD_TYPE, START_TIME, STATUS
       )
     values (#{id,jdbcType=INTEGER}, #{prodNo,jdbcType=VARCHAR}, #{prodName,jdbcType=VARCHAR}, 
-      #{prodType,jdbcType=VARCHAR}, #{startTime,jdbcType=TIMESTAMP}, #{status,jdbcType=INTEGER}
+      #{prodType,jdbcType=VARCHAR}, #{startTime,jdbcType=TIMESTAMP}, #{status,jdbcType=VARCHAR}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.NorthKingSys.jbf.cn.domain.JbfProduct">
@@ -69,7 +69,7 @@
         #{startTime,jdbcType=TIMESTAMP},
       </if>
       <if test="status != null">
-        #{status,jdbcType=INTEGER},
+        #{status,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -89,7 +89,7 @@
         START_TIME = #{startTime,jdbcType=TIMESTAMP},
       </if>
       <if test="status != null">
-        STATUS = #{status,jdbcType=INTEGER},
+        STATUS = #{status,jdbcType=VARCHAR},
       </if>
     </set>
     where ID = #{id,jdbcType=INTEGER}
@@ -100,8 +100,31 @@
       PROD_NAME = #{prodName,jdbcType=VARCHAR},
       PROD_TYPE = #{prodType,jdbcType=VARCHAR},
       START_TIME = #{startTime,jdbcType=TIMESTAMP},
-      STATUS = #{status,jdbcType=INTEGER}
+      STATUS = #{status,jdbcType=VARCHAR}
     where ID = #{id,jdbcType=INTEGER}
   </update>
+
+  <select id="getProductInfo" resultType="com.jbf.jbfboot.Api.ProjectInfo">
+    select
+    <include refid="Base_Column_List" />
+    from JBF_PRODUCT
+    where  1=1
+    <if test="prodname != null and prodname != ''">
+      and  PROD_NAME = #{prodname,jdbcType=VARCHAR}
+    </if>
+    <if test="prodtype != null and prodtype != ''">
+      and PROD_TYPE = #{prodtype,jdbcType=VARCHAR}
+    </if>
+    <if test="starttime != null">
+      and  START_TIME = #{starttime,jdbcType=VARCHAR}
+    </if>
+    <if test="status != null and status !=''">
+      and STATUS = #{status,jdbcType=VARCHAR}
+    </if>
+  </select>
+
+  <select id="getMaxCustNo" resultType="java.lang.String">
+    SELECT a.PROD_NO from JBF_PRODUCT a where a.ID in (select MAX(ID) from JBF_PRODUCT)
+  </select>
 
 </mapper>

@@ -139,19 +139,19 @@
     where CUST_NO = #{custNo,jdbcType=VARCHAR}
   </update>
   <!--add by zhujxd 20200902 新增客户信息查询-->
-  <select id="selectByClientInfo" parameterType="com.NorthKingSys.jbf.cn.domain.JbfCustInfo" resultType="com.NorthKingSys.jbf.cn.domain.JbfCustInfo">
+  <select id="selectByClientInfo" resultType="com.jbf.jbfboot.Domain.JbfCustInfo">
     select
     <include refid="Base_Column_List" />
     from JBF_CUST_INFO
     where 1=1
-    <if test="custName != null and custName != ''">
-      and  CUST_NAME = #{custName,jdbcType=VARCHAR}
+    <if test="custname != null and custname != ''">
+      and  CUST_NAME = #{custname,jdbcType=VARCHAR}
     </if>
     <if test="company != null and company != ''">
       and COMPANY = #{company,jdbcType=VARCHAR}
     </if>
-    <if test="relationName != null and relationName !=''">
-    and  RELATION_NAME = #{relationName,jdbcType=VARCHAR}
+    <if test="relationname != null and relationname !=''">
+      and  RELATION_NAME = #{relationname,jdbcType=VARCHAR}
     </if>
     <if test="region != null and region !=''">
       and REGION = #{region,jdbcType=VARCHAR}

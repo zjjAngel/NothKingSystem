@@ -22,7 +22,7 @@ public class ProjectInfo {
 
     /*开始时间*/
 
-    private Date starttime;
+    private String starttime;
 
     /*状态*/
 
@@ -52,12 +52,11 @@ public class ProjectInfo {
         this.prodtype = prodtype;
     }
 
-
-    public Date getStarttime() {
+    public String getStarttime() {
         return starttime;
     }
 
-    public void setStarttime(Date starttime) {
+    public void setStarttime(String starttime) {
         this.starttime = starttime;
     }
 
