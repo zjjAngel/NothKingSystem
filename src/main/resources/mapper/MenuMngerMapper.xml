@@ -68,12 +68,15 @@
     </select>
     <select id="queryAllMenu" resultType="com.NorthKingSys.jbf.cn.biz.MenuInfo">
         select m.ID,m.MENU_ID,m.MENU_NAME, m.MENU_LEVEL_PARENT  from JBF_MENU m
-           <where>
-               <if test="MENU_LEVEL!=null">
-                   m.MENU_LEVEL=#{MENU_LEVEL}
-               </if>
-           </where>
-            order by m.MENU_LEVEL asc
+        <where>
+            <if test="MENU_LEVEL!=null">
+                m.MENU_LEVEL=#{MENU_LEVEL}
+            </if>
+            <if test="menu_id!=null">
+                and  m.menu_id=#{menu_id}
+            </if>
+        </where>
+        order by m.MENU_LEVEL asc
 
     </select>
     <select id="queryAllMenuLevel" resultType="com.NorthKingSys.jbf.cn.biz.MenuInfo">

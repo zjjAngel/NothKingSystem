@@ -75,8 +75,10 @@ public class RoleMngMeNuController {
      * @return
      */
     @GetMapping("/queryMenuByRoleId")
-    public Result<?> queryMenuByRoleId(@RequestParam("role_Id") String role_Id){
-       return ResultUtil.success(roleMngMeNuService.queryMenuByRoleId(role_Id));
+    public Result<?> queryMenuByRoleId(@RequestParam("role_Id") String role_Id,
+                                       @RequestParam(value = "menu_level",required = false)String menu_level,
+                                       @RequestParam(value = "menu_id",required = false)String menu_id){
+       return ResultUtil.success(roleMngMeNuService.queryMenuByRoleId(role_Id,menu_level,menu_id));
     }
 
     /**

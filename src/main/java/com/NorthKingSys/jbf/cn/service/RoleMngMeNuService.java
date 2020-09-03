@@ -102,40 +102,58 @@ public class RoleMngMeNuService {
 //       }
 //   }
 
-   public Object queryMenuByRoleId(String role_Id){
-       // 按等级查询出每一等级所有的菜单
-       List<MenuInfo> menuInfosPer = menuMngerMapper.selectPerLevelMenus();
-       List<RoleInfo> menuInfos= roleMngMeNuMapper.selectFein_ids(role_Id);//查询出该角色拥有的所有菜单的menu_id
-       //查出所有拥有权限的菜单
-       List<String> sortMnInfos=Arrays.asList(menuInfos.get(0).getFEIGN_IDS().split(","));
-       List<MenuInfo>  resultMenu= new ArrayList<>();//存放有权限的菜单
-       for (int i = 0; i < menuInfosPer.size(); i++) {
-
-          StringBuffer stringBuffer= new StringBuffer();
-           int finalI = i;
-           sortMnInfos.forEach(mnInfo->{
-               if (menuInfosPer.get(finalI).getMenu_ids().contains(mnInfo)){
-                   stringBuffer.append(mnInfo).append(",");
-
-               }
-           });
-           menuInfosPer.get(finalI).setMenu_ids(String.valueOf(stringBuffer));
-
-       } //得到清洗后的数据（去掉没有权限的）
-
-       // 翻译出List<menuIdNameRel>
-       for (int i = 0; i < menuInfosPer.size(); i++) {
-           //每一个级别的menuId
-           List<String> strings = Arrays.asList(menuInfosPer.get(i).getMenu_ids().split(","));
-           List<Map> explain= new ArrayList<>();
-           strings.stream().forEach(e->{
-               Map<String, String> resut = new HashMap<>();
-               resut.put(e,menuMngerMapper.selectMenusName(e));
-               explain.add(resut);
-           });
-           menuInfosPer.get(i).setMenuIdNameRelList(explain);
+   public Object queryMenuByRoleId(String role_Id,String menu_level,String menu_id){
+//       // 按等级查询出每一等级所有的菜单
+//       List<MenuInfo> menuInfosPer = menuMngerMapper.selectPerLevelMenus();
+//       List<RoleInfo> menuInfos= roleMngMeNuMapper.selectFein_ids(role_Id);//查询出该角色拥有的所有菜单的menu_id
+//       //查出所有拥有权限的菜单
+//       List<String> sortMnInfos=Arrays.asList(menuInfos.get(0).getFEIGN_IDS().split(","));
+//       List<MenuInfo>  resultMenu= new ArrayList<>();//存放有权限的菜单
+//       for (int i = 0; i < menuInfosPer.size(); i++) {
+//
+//          StringBuffer stringBuffer= new StringBuffer();
+//           int finalI = i;
+//           sortMnInfos.forEach(mnInfo->{
+//               if (menuInfosPer.get(finalI).getMenu_ids().contains(mnInfo)){
+//                   stringBuffer.append(mnInfo).append(",");
+//
+//               }
+//           });
+//           menuInfosPer.get(finalI).setMenu_ids(String.valueOf(stringBuffer));
+//
+//       } //得到清洗后的数据（去掉没有权限的）
+//
+//       // 翻译出List<menuIdNameRel>
+//       for (int i = 0; i < menuInfosPer.size(); i++) {
+//           //每一个级别的menuId
+//           List<String> strings = Arrays.asList(menuInfosPer.get(i).getMenu_ids().split(","));
+//           List<Map> explain= new ArrayList<>();
+//           strings.stream().forEach(e->{
+//               Map<String, String> resut = new HashMap<>();
+//               resut.put(e,menuMngerMapper.selectMenusName(e));
+//               explain.add(resut);
+//           });
+//           menuInfosPer.get(i).setMenuIdNameRelList(explain);
+//       }
+//       return menuInfosPer;
+       List<MenuInfo> menuInfosAll= menuMngerMapper.queryAllMenu(menu_level,menu_id);
+       //查询出该角色拥有的所有菜单的menu_id
+       List<RoleInfo> menuInfos= roleMngMeNuMapper.selectFein_ids(role_Id);
+       List<String> ids=null;
+       if(menuInfos.size()>0){
+           ids= Arrays.asList(menuInfos.get(0).getFEIGN_IDS().split(","));
+       }else {
+           throw new BusinessException("该角色未分配菜单");
        }
-       return menuInfosPer;
+       List<MenuInfo> resultMenuInfos=new ArrayList<>();
+       for (int i = 0; i < menuInfosAll.size(); i++) {
+           for (String id : ids) {
+               if (menuInfosAll.get(i).getMenu_id().equals(id)) {
+                   resultMenuInfos.add(menuInfosAll.get(i));
+               }
+           }
+       }
+       return resultMenuInfos;
    }
 
     /**

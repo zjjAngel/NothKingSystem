@@ -16,7 +16,7 @@ public interface MenuMngerMapper {
                    @Param("MENU_LEVEL_PARENT")String MENU_LEVEL_PARENT,@Param("MENU_LEVEL")String MENU_LEVEL,
                    @Param("PATH")String PATH,@Param("BACK_UP") String BACK_UP,@Param("STATUS") String STATUS
    );
-   List<MenuInfo> queryAllMenu( @Param("MENU_LEVEL")String menu_level);
+    List<MenuInfo> queryAllMenu( @Param("MENU_LEVEL")String menu_level,@Param("menu_id")String menu_id);
    List<MenuInfo> queryAllMenuLevel();
     List<MenuInfo> selectPerLevelMenus();
     String  selectMenusName(@Param("MENU_ID") String mnInfo);
