@@ -1,6 +1,8 @@
 package com.NorthKingSys.jbf.cn.cust.controller;
 
 
+import com.NorthKingSys.jbf.cn.biz.BeanResult;
+import com.NorthKingSys.jbf.cn.biz.Result;
 import com.NorthKingSys.jbf.cn.cust.api.CustInfo;
 import com.NorthKingSys.jbf.cn.domain.JbfCustInfo;
 import com.NorthKingSys.jbf.cn.mapper.JbfCustInfoMapper;
@@ -32,8 +34,7 @@ public class CustInfoController {
      * @return
      */
     @PostMapping("/query")
-    private List<CustInfo> queryCustInfo(@RequestBody CustInfo custInfo){
-
+    private BeanResult queryCustInfo(@RequestBody CustInfo custInfo){
         List<JbfCustInfo> jbfCustInfos = new ArrayList<>();
         List<CustInfo> queryClients = new ArrayList<>();
 
@@ -61,7 +62,8 @@ public class CustInfoController {
                 queryClients.add(queryClient1);
             }
         }
-        return queryClients;
+            return new BeanResult(queryClients);
+
     }
 
     /**
@@ -72,7 +74,7 @@ public class CustInfoController {
 
 
     @PostMapping("/add")
-    private String addCustInfo(@RequestBody CustInfo custInfo){
+    private BeanResult addCustInfo(@RequestBody CustInfo custInfo){
         String clientno = null;
 
         String maxNo = getMaxCustNo();
@@ -90,7 +92,8 @@ public class CustInfoController {
         jbfCustInfo.setRelateMobilNo(custInfo.getRelatemobilNo());
         int num =  jbfCustInfoMapper.insertSelective(jbfCustInfo);
         log.info("num的值是"+num);
-        return clientno;
+        custInfo.setCustno(clientno);
+        return new BeanResult(custInfo);
     }
 
 
@@ -99,7 +102,7 @@ public class CustInfoController {
      * @param custInfo
      */
     @PostMapping("/update")
-    private void updateClientInfo(@RequestBody CustInfo custInfo){
+    private BeanResult updateClientInfo(@RequestBody CustInfo custInfo){
 
         JbfCustInfo jbfCustInfo = new JbfCustInfo();
         jbfCustInfo.setCustNo(custInfo.getCustno());
@@ -113,6 +116,7 @@ public class CustInfoController {
 
         jbfCustInfoMapper.updateByPrimaryKeySelective(jbfCustInfo);
 
+        return new BeanResult(custInfo);
     }
 
     /**

@@ -1,5 +1,6 @@
 package com.NorthKingSys.jbf.cn.project.controller;
 
+import com.NorthKingSys.jbf.cn.biz.Result;
 import com.NorthKingSys.jbf.cn.domain.JbfProduct;
 import com.NorthKingSys.jbf.cn.mapper.JbfProductMapper;
 import com.NorthKingSys.jbf.cn.project.api.ProjectInfo;
@@ -68,10 +69,12 @@ public class ProjectInfoController {
     /**
      * 查询项目
      * @param projectInfo
-     * @return
+     * @return  List<ProjectInfo>
      */
     @PostMapping("/query")
-    private List<ProjectInfo> queryProdInfo(@RequestBody  ProjectInfo projectInfo){
+    private Result queryProdInfo(@RequestBody  ProjectInfo projectInfo){
+        Result result = new Result();
+
         List<ProjectInfo> projectInfoss = new ArrayList<>();
 
         String startTime= null;
@@ -97,8 +100,15 @@ public class ProjectInfoController {
                 projectInfoss.add(projectInfo2);
             }
         }
-        return projectInfoss;
-
+        if(projectInfoss != null && projectInfoss.size()>0){
+            result.setData(projectInfoss);
+            result.setCode(0000);
+            result.setMsg("SUCCESS");
+        }else {
+            result.setCode(4000);
+            result.setMsg("没有纪录");
+        }
+        return result;
     }
 
     /**
