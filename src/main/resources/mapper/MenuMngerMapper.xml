@@ -92,4 +92,60 @@
             MENU_ID=#{MENU_ID}
         </where>
     </select>
+    <select id="queryFirstMenu" resultType="com.NorthKingSys.jbf.cn.biz.MenuInfo">
+        SELECT
+	t.MENU_ID,
+	t.MENU_NAME,
+	t.MENU_LEVEL,
+  t.MENU_LEVEL_PARENT
+FROM
+	JBF_MENU t
+WHERE
+	t.MENU_LEVEL =1
+	and t.MENU_ID
+	in
+	(
+     <foreach collection="list" item="item" separator="," open="(" close=")">
+            #{item}
+     </foreach>
+	)
+    </select>
+    <select id="queryNextLevelData" resultType="com.NorthKingSys.jbf.cn.biz.MenuInfo">
+        SELECT d.*, c.MENU_NAME as Menu_parent_name	from
+(
+SELECT
+	b.MENU_ID,
+	b.MENU_NAME,
+	b.MENU_LEVEL,
+	b.MENU_LEVEL_PARENT
+FROM
+	JBF_MENU b
+	where
+	b.MENU_LEVEL=#{menu_level}+1
+	and
+	b.MENU_LEVEL_PARENT
+	in
+	(
+	 select a.MENU_ID from JBF_MENU a WHERE
+	a.MENU_LEVEL =#{menu_level}
+	)
+	)
+	d
+	left join
+	(
+	SELECT
+	t.MENU_ID,
+	t.MENU_NAME,
+	t.MENU_LEVEL,
+  t.MENU_LEVEL_PARENT
+FROM
+	JBF_MENU t
+WHERE
+	t.MENU_LEVEL =#{menu_level}
+	ORDER BY t.MENU_ID asc
+	) c
+	on
+	c.MENU_ID =d.MENU_LEVEL_PARENT
+
+    </select>
 </mapper>

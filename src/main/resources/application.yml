@@ -49,9 +49,8 @@ pagehelper:
 mybatis:
   type-aliases-package: com.NorthKingSys.jbf.cn.mapper
   mapper-locations: classpath:mapper/*.xml
-
+#IO密集型应用，线程数为2N+1
 thread-pool-factory:
-  #IO密集型应用，线程数为2N+1
   corePoolSize: 9
   maxPoolSize: 18
   queueCapacity: 100

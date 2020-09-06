@@ -79,27 +79,6 @@ public class AdminInterceptor implements HandlerInterceptor {
         return true;
     }
 
-   private boolean loginOrnot(HttpServletRequest request, HttpServletResponse response, Object handler) throws IOException {
-       response.setCharacterEncoding("UTF-8");
-       response.setContentType("application/json; charset=utf-8");
-//       PrintWriter out = null;
-       ServletOutputStream outputStream= response.getOutputStream();
-       try {
-           JSONObject res = new JSONObject();
-           res.put("success", false);
-           res.put("message", "用户未登录！");
-//           out = response.getWriter();
-//           out.append(res.toString());
-           outputStream.write(res.toJSONString().getBytes());
-           outputStream.flush();
-           outputStream.close();
-           return false;
-       } catch (Exception e) {
-           e.printStackTrace();
-           response.sendError(500);
-           return false;
-       }
-   }
     @Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
 
@@ -113,22 +92,22 @@ public class AdminInterceptor implements HandlerInterceptor {
         response.setHeader("Access-Control-Allow-Origin", "*");
         response.setHeader("Access-Control-Max-Age", "3600");
     }
-    private boolean loginOut(HttpServletRequest request, HttpServletResponse response, Object handler) throws IOException {
-        response.setCharacterEncoding("UTF-8");
-        response.setContentType("application/json; charset=utf-8");
-        PrintWriter out = null;
-        try {
-            JSONObject res = new JSONObject();
-            res.put("success", false);
-            res.put("message", "用户已退出！");
-            out = response.getWriter();
-            out.append(res.toString());
-            return false;
-        } catch (Exception e) {
-            e.printStackTrace();
-            response.sendError(500);
-            return false;
-        }
-    }
+//    private boolean loginOut(HttpServletRequest request, HttpServletResponse response, Object handler) throws IOException {
+//        response.setCharacterEncoding("UTF-8");
+//        response.setContentType("application/json; charset=utf-8");
+//        PrintWriter out = null;
+//        try {
+//            JSONObject res = new JSONObject();
+//            res.put("success", false);
+//            res.put("message", "用户已退出！");
+//            out = response.getWriter();
+//            out.append(res.toString());
+//            return false;
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            response.sendError(500);
+//            return false;
+//        }
+//    }
 
 }

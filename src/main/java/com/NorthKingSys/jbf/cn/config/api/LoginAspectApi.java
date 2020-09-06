@@ -1,6 +1,6 @@
-//package com.NorthKingSys.jbf.cn.config;
+//package com.NorthKingSys.jbf.cn.config.api;
 //
-//import com.NorthKingSys.jbf.cn.biz.BusinessException;
+//import com.NorthKingSys.jbf.cn.config.LoginAspect;
 //import com.NorthKingSys.jbf.cn.controller.UserController;
 //import com.NorthKingSys.jbf.cn.domain.UserBack;
 //import com.alibaba.fastjson.JSONObject;
@@ -15,15 +15,13 @@
 //import org.springframework.web.context.request.ServletRequestAttributes;
 //
 //import javax.servlet.ServletOutputStream;
-//import javax.servlet.http.Cookie;
 //import javax.servlet.http.HttpServletRequest;
 //import javax.servlet.http.HttpServletResponse;
 //import java.io.IOException;
-//import java.io.PrintWriter;
-//
 //@Aspect
 //@Component
-//public class LoginAspect {
+//public class LoginAspectApi {
+//
 //    @Autowired
 //    UserController userController;
 //    private Logger logger = LoggerFactory.getLogger(LoginAspect.class);
@@ -31,26 +29,21 @@
 ////    private RedisTemplate redisTemplate;
 //
 //    //切入点,对登录方法不进行切入
-//    @Pointcut("execution(* com.NorthKingSys.jbf.cn.controller.*.*(..))"
-//            + "&& !execution(* com.NorthKingSys.jbf.cn.controller.UserController.index())" //登录方法
+//    @Pointcut("execution(* com.NorthKingSys.jbf.cn.cust.controller.*.*(..))"//登录方法
 //    )//跳转登录页
-//    public void loing(){
-//    }
-//
-//    @Pointcut("execution(* com.NorthKingSys.jbf.cn.controller.UserController.index())")
-//    public void loginPoint(){
-//
+//    public void loing1(){
 //    }
 //
 //    //切入点,对登录方法不进行切入
-////    @Pointcut("execution(* com.NorthKingSys.jbf.cn.controller.project.controller.ProjectInfoController.*(..))"//登录方法
-////    )//跳转登录页
-////    public void loing2(){
-////    }
+//    @Pointcut("execution(* com.NorthKingSys.jbf.cn.controller.project.controller.*.*(..))"//登录方法
+//    )//跳转登录页
+//    public void loing2(){
+//    }
+//
 //    /**
 //     * 前置增强,校验redis中用户的信息
 //     */
-//    @Before("loing() &&! loginPoint() ")
+//    @Before("loing1()")
 //    public void before() throws IOException {
 //        //1、得到request对象
 //        ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
@@ -78,6 +71,22 @@
 ////        }
 ////        System.out.println(token);
 //    }
+//    @Before("loing2()")
+//    public void loing2before() throws IOException {
+//        //1、得到request对象
+//        ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+//        HttpServletRequest request = attributes.getRequest();
+//        HttpServletResponse response= attributes.getResponse();
+//        //2、获取客户端保存的sessionId
+//        Object usr=request.getSession().getAttribute("user");
+//        if(usr==null){
+//            loginOrnot( request,  response, null);
+//        }
+//        if (usr instanceof UserBack){
+//            logger.warn("【登录校验密码是否过期】");
+//
+//        }
+//    }
 //
 //    private boolean loginOrnot(HttpServletRequest request, HttpServletResponse response, Object handler) throws IOException {
 //        response.setCharacterEncoding("UTF-8");
@@ -97,5 +106,4 @@
 //            return false;
 //        }
 //    }
-//
 //}

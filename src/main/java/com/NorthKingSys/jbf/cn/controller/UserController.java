@@ -3,11 +3,13 @@ package com.NorthKingSys.jbf.cn.controller;
 import com.NorthKingSys.jbf.cn.biz.BusinessException;
 import com.NorthKingSys.jbf.cn.biz.JBFErrorCode;
 import com.NorthKingSys.jbf.cn.biz.Result;
+import com.NorthKingSys.jbf.cn.config.RedisConfig;
 import com.NorthKingSys.jbf.cn.domain.RoleInfo;
 import com.NorthKingSys.jbf.cn.domain.UserBack;
 import com.NorthKingSys.jbf.cn.domain.UserInfo;
 import com.NorthKingSys.jbf.cn.mapper.UserInfoMapper;
 import com.NorthKingSys.jbf.cn.service.UserService;
+import com.NorthKingSys.jbf.cn.util.JedisUtil;
 import com.NorthKingSys.jbf.cn.util.ResultUtil;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +23,7 @@ import java.net.UnknownHostException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 @RestController
 @RequestMapping("/api/NothKingSystem")
@@ -29,6 +32,8 @@ public class UserController {
     UserService userService;
     @Autowired
     UserInfoMapper userInfoMapper;
+    @Autowired
+    private JedisUtil jedisUtil;
     @PostMapping("/demo")
    public Result<Object> getTest(){
        return ResultUtil.success(userInfoMapper.selectByPrimaryKey(1));
@@ -61,11 +66,14 @@ public class UserController {
                 Object user_name = res.get(0).get("user_name");
                 Object user_role = res.get(0).get("user_Role");
                 Object user_id = res.get(0).get("user_id");
+                Object effect_date = res.get(0).get("effect_date");
+//                effect_date
                 String sessionId = request.getSession().getId();
                 rslt.put("user_name",user_name);
                 rslt.put("user_role",user_role);
                 rslt.put("user_id",user_id);
                 rslt.put("sessionId",sessionId);
+                jedisUtil.set(sessionId,user_name, Long.valueOf(String.valueOf(effect_date)) ,TimeUnit.HOURS);
             }else {
              throw new BusinessException("非法用户,同一用户名 密码的账号存在两个及其以上");
             }

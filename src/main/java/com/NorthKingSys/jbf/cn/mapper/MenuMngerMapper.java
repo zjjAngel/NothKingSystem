@@ -20,4 +20,6 @@ public interface MenuMngerMapper {
    List<MenuInfo> queryAllMenuLevel();
     List<MenuInfo> selectPerLevelMenus();
     String  selectMenusName(@Param("MENU_ID") String mnInfo);
+    List<MenuInfo> queryFirstMenu(@Param("list") List<String> list);
+    List<MenuInfo> queryNextLevelData(@Param("menu_level")Integer menu_level);
 }
