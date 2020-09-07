@@ -81,6 +81,13 @@
     </select>
     <select id="queryAllMenuLevel" resultType="com.NorthKingSys.jbf.cn.biz.MenuInfo">
          select distinct m.MENU_LEVEL  from JBF_MENU m
+            <where>
+                m.MENU_ID
+                in
+                <foreach collection="list" item="item" separator="," open="(" close=")">
+                    #{item}
+                </foreach>
+            </where>
             order by m.MENU_LEVEL asc
     </select>
     <select id="selectPerLevelMenus" resultType="com.NorthKingSys.jbf.cn.biz.MenuInfo">
@@ -104,11 +111,9 @@ WHERE
 	t.MENU_LEVEL =1
 	and t.MENU_ID
 	in
-	(
      <foreach collection="list" item="item" separator="," open="(" close=")">
             #{item}
      </foreach>
-	)
     </select>
     <select id="queryNextLevelData" resultType="com.NorthKingSys.jbf.cn.biz.MenuInfo">
         SELECT d.*, c.MENU_NAME as Menu_parent_name	from
@@ -122,6 +127,10 @@ FROM
 	JBF_MENU b
 	where
 	b.MENU_LEVEL=#{menu_level}+1
+	and b.menu_id in
+        <foreach collection="list" item="item" separator="," open="(" close=")">
+            #{item}
+        </foreach>
 	and
 	b.MENU_LEVEL_PARENT
 	in
