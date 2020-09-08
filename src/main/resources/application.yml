@@ -11,6 +11,18 @@ spring:
     password: 123456
   application:
     name: NothKingSystem
+  redis:
+    host: 192.168.42.143
+    password:
+    port: 6379
+    database: 0
+    jedis:
+      pool:
+        max-active: 200
+        max-wait: 10000
+        max-idle: 50
+        min-idle: 5
+
 #pagehelper分页插件配置
 pagehelper:
   helper-dialect: mysql
@@ -37,10 +49,15 @@ pagehelper:
 mybatis:
   type-aliases-package: com.NorthKingSys.jbf.cn.mapper
   mapper-locations: classpath:mapper/*.xml
-
+#IO密集型应用，线程数为2N+1
 thread-pool-factory:
-  #IO密集型应用，线程数为2N+1
   corePoolSize: 9
   maxPoolSize: 18
   queueCapacity: 100
   keepAliveSeconds: 120
+logging.level.com.NorthKingSys.jbf.cn.mapper : debug
+
+#配置redis
+#  spring.redis.host=localhost
+#  spring.redis.password=
+#  spring.redis.port=6379

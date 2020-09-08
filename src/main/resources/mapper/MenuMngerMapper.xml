@@ -68,16 +68,26 @@
     </select>
     <select id="queryAllMenu" resultType="com.NorthKingSys.jbf.cn.biz.MenuInfo">
         select m.ID,m.MENU_ID,m.MENU_NAME, m.MENU_LEVEL_PARENT  from JBF_MENU m
-           <where>
-               <if test="MENU_LEVEL!=null">
-                   m.MENU_LEVEL=#{MENU_LEVEL}
-               </if>
-           </where>
-            order by m.MENU_LEVEL asc
+        <where>
+            <if test="MENU_LEVEL!=null">
+                m.MENU_LEVEL=#{MENU_LEVEL}
+            </if>
+            <if test="menu_id!=null">
+                and  m.menu_id=#{menu_id}
+            </if>
+        </where>
+        order by m.MENU_LEVEL asc
 
     </select>
     <select id="queryAllMenuLevel" resultType="com.NorthKingSys.jbf.cn.biz.MenuInfo">
          select distinct m.MENU_LEVEL  from JBF_MENU m
+            <where>
+                m.MENU_ID
+                in
+                <foreach collection="list" item="item" separator="," open="(" close=")">
+                    #{item}
+                </foreach>
+            </where>
             order by m.MENU_LEVEL asc
     </select>
     <select id="selectPerLevelMenus" resultType="com.NorthKingSys.jbf.cn.biz.MenuInfo">
@@ -88,5 +98,63 @@
         <where>
             MENU_ID=#{MENU_ID}
         </where>
+    </select>
+    <select id="queryFirstMenu" resultType="com.NorthKingSys.jbf.cn.biz.MenuInfo">
+        SELECT
+	t.MENU_ID,
+	t.MENU_NAME,
+	t.MENU_LEVEL,
+  t.MENU_LEVEL_PARENT
+FROM
+	JBF_MENU t
+WHERE
+	t.MENU_LEVEL =1
+	and t.MENU_ID
+	in
+     <foreach collection="list" item="item" separator="," open="(" close=")">
+            #{item}
+     </foreach>
+    </select>
+    <select id="queryNextLevelData" resultType="com.NorthKingSys.jbf.cn.biz.MenuInfo">
+        SELECT d.*, c.MENU_NAME as Menu_parent_name	from
+(
+SELECT
+	b.MENU_ID,
+	b.MENU_NAME,
+	b.MENU_LEVEL,
+	b.MENU_LEVEL_PARENT
+FROM
+	JBF_MENU b
+	where
+	b.MENU_LEVEL=#{menu_level}+1
+	and b.menu_id in
+        <foreach collection="list" item="item" separator="," open="(" close=")">
+            #{item}
+        </foreach>
+	and
+	b.MENU_LEVEL_PARENT
+	in
+	(
+	 select a.MENU_ID from JBF_MENU a WHERE
+	a.MENU_LEVEL =#{menu_level}
+	)
+	)
+	d
+	left join
+	(
+	SELECT
+	t.MENU_ID,
+	t.MENU_NAME,
+	t.MENU_LEVEL,
+  t.MENU_LEVEL_PARENT
+FROM
+	JBF_MENU t
+WHERE
+	t.MENU_LEVEL =#{menu_level}
+	ORDER BY t.MENU_ID asc
+	) c
+	on
+	c.MENU_ID =d.MENU_LEVEL_PARENT
+
     </select>
 </mapper>

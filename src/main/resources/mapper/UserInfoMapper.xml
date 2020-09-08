@@ -44,14 +44,21 @@
 <!--    -->
 <!--  </insert>-->
   <select id="selectByUsername" resultType="map">
-      select a.id,a.user_name,a.user_Role,a.create_time, a.LAST_SIGN_TIME,
-      b.effect_date from JBF_USER a ,JBF_USER_PWD b
-       <where>
-         a.user_id=b.user_id
-        <if test="username!=null and username!=''">
+    select t.id,t.user_id,t.user_name,t.user_Role,t.create_time,
+         t.LAST_SIGN_TIME,t.effect_date, r.role_name
+    from
+    (select a.id,a.user_id, a.user_name,a.user_Role,a.create_time, a.LAST_SIGN_TIME,
+    b.effect_date from JBF_USER a ,JBF_USER_PWD b
+    <where>a.user_id=b.user_id
+      <if test ="username!=null and username!=''">
           and  a.user_name= #{username}
         </if>
+        <if test="password!=null">
+          and b.password=#{password}
+        </if>
       </where>
+      ) t left join JBF_ROLE r
+      on t.user_Role=r.role_id
   </select>
   <insert id="insert" parameterType="com.NorthKingSys.jbf.cn.domain.UserInfo">
     insert into JBF_USER (ID, USER_ID, USER_NAME,

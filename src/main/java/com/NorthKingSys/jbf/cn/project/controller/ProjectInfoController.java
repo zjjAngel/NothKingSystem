@@ -1,10 +1,8 @@
-package com.NorthKingSys.jbf.cn.project.controller;
+package com.NorthKingSys.jbf.cn.controller.project.controller;
 
-import com.NorthKingSys.jbf.cn.biz.BusinessException;
-import com.NorthKingSys.jbf.cn.cust.api.AddClient;
 import com.NorthKingSys.jbf.cn.domain.JbfProduct;
 import com.NorthKingSys.jbf.cn.mapper.JbfProductMapper;
-import com.NorthKingSys.jbf.cn.project.api.ProjectInfo;
+import com.NorthKingSys.jbf.cn.controller.project.api.ProjectInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -65,25 +63,25 @@ public class ProjectInfoController {
      * @return
      */
     @PostMapping("/query")
-    private ProjectInfo queryProdInfo(ProjectInfo projectInfo){
-        ProjectInfo projectInfo1 = new ProjectInfo();
-        String startTime= null;
-        if(projectInfo.getStarttime()!=null){
-             startTime = projectInfo.getStarttime().toString();
-        }
-
-        projectInfo1 = jbfProductMapper.getProductInfo(projectInfo.getProdname(),
-                projectInfo.getProdtype(),
-                startTime,
-                projectInfo.getStatus());
-
-        if(projectInfo1!= null){
-            return projectInfo1;
-        }else {
-
-            throw  new BusinessException("查询无纪录");
-        }
-
+    private ProjectInfo queryProdInfo(String projectInfo){
+//        ProjectInfo projectInfo1 = new ProjectInfo();
+//        String startTime= null;
+//        if(projectInfo.getStarttime()!=null){
+//             startTime = projectInfo.getStarttime().toString();
+//        }
+//
+//        projectInfo1 = jbfProductMapper.getProductInfo(projectInfo.getProdname(),
+//                projectInfo.getProdtype(),
+//                startTime,
+//                projectInfo.getStatus());
+//
+//        if(projectInfo1!= null){
+//            return projectInfo1;
+//        }else {
+//
+//            throw  new BusinessException("查询无纪录");
+//        }
+            return new ProjectInfo();
 
     }
 

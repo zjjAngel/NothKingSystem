@@ -1,11 +1,11 @@
 package com.NorthKingSys.jbf.cn.config;
 
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.servlet.config.annotation.InterceptorRegistration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+
 @Configuration
-public class InterceptorConfig implements WebMvcConfigurer {
+public class InterceptorConfig  extends WebMvcConfigurerAdapter {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
 //        // 注册拦截器
@@ -16,6 +16,12 @@ public class InterceptorConfig implements WebMvcConfigurer {
 //        ir.excludePathPatterns("/login");
 
         // 以上三句代码可以使用下面的代替
-         registry.addInterceptor(new LoginInterceptor()).addPathPatterns("/*").excludePathPatterns("/login").excludePathPatterns("/tologin").excludePathPatterns("/registry").excludePathPatterns("/goto").excludePathPatterns("*.html");
+         registry.addInterceptor(new AdminInterceptor())
+                 .addPathPatterns("/*")
+                 .excludePathPatterns("/login")
+                 .excludePathPatterns("/tologin")
+                 .excludePathPatterns("/registry")
+                 .excludePathPatterns("/goto");
+//        super.addInterceptors(registry);
     }
 }

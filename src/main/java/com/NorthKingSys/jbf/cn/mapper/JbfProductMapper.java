@@ -1,7 +1,7 @@
 package com.NorthKingSys.jbf.cn.mapper;
 
 import com.NorthKingSys.jbf.cn.domain.JbfProduct;
-import com.NorthKingSys.jbf.cn.project.api.ProjectInfo;
+import com.NorthKingSys.jbf.cn.controller.project.api.ProjectInfo;
 
 public interface JbfProductMapper {
     int deleteByPrimaryKey(String id);

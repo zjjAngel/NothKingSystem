@@ -102,40 +102,72 @@ public class RoleMngMeNuService {
 //       }
 //   }
 
-   public Object queryMenuByRoleId(String role_Id){
-       // 按等级查询出每一等级所有的菜单
-       List<MenuInfo> menuInfosPer = menuMngerMapper.selectPerLevelMenus();
-       List<RoleInfo> menuInfos= roleMngMeNuMapper.selectFein_ids(role_Id);//查询出该角色拥有的所有菜单的menu_id
-       //查出所有拥有权限的菜单
-       List<String> sortMnInfos=Arrays.asList(menuInfos.get(0).getFEIGN_IDS().split(","));
-       List<MenuInfo>  resultMenu= new ArrayList<>();//存放有权限的菜单
-       for (int i = 0; i < menuInfosPer.size(); i++) {
-
-          StringBuffer stringBuffer= new StringBuffer();
-           int finalI = i;
-           sortMnInfos.forEach(mnInfo->{
-               if (menuInfosPer.get(finalI).getMenu_ids().contains(mnInfo)){
-                   stringBuffer.append(mnInfo).append(",");
-
-               }
-           });
-           menuInfosPer.get(finalI).setMenu_ids(String.valueOf(stringBuffer));
-
-       } //得到清洗后的数据（去掉没有权限的）
-
-       // 翻译出List<menuIdNameRel>
-       for (int i = 0; i < menuInfosPer.size(); i++) {
-           //每一个级别的menuId
-           List<String> strings = Arrays.asList(menuInfosPer.get(i).getMenu_ids().split(","));
-           List<Map> explain= new ArrayList<>();
-           strings.stream().forEach(e->{
-               Map<String, String> resut = new HashMap<>();
-               resut.put(e,menuMngerMapper.selectMenusName(e));
-               explain.add(resut);
-           });
-           menuInfosPer.get(i).setMenuIdNameRelList(explain);
+   public Object queryMenuByRoleId(String role_Id,String menu_level,String menu_id){
+//       List<MenuInfo> menuInfosAll= menuMngerMapper.queryAllMenu(menu_level,menu_id);
+//       //查询出该角色拥有的所有菜单的menu_id
+//       List<RoleInfo> menuInfos= roleMngMeNuMapper.selectFein_ids(role_Id);
+//       List<String> ids=null;
+//       if(menuInfos.size()>0){
+//           ids= Arrays.asList(menuInfos.get(0).getFEIGN_IDS().split(","));
+//       }else {
+//           throw new BusinessException("该角色未分配菜单");
+//       }
+//       List<MenuInfo> resultMenuInfos=new ArrayList<>();
+//       for (int i = 0; i < menuInfosAll.size(); i++) {
+//           for (String id : ids) {
+//               if (menuInfosAll.get(i).getMenu_id().equals(id)) {
+//                   resultMenuInfos.add(menuInfosAll.get(i));
+//               }
+//           }
+//       }
+//       return resultMenuInfos;
+      // 查询出该角色拥有的所有菜单的menu_id
+       List<RoleInfo> menuInfos= roleMngMeNuMapper.selectFein_ids(role_Id);
+       List<String> ids=null;
+       if(menuInfos.size()>0){
+           ids= Arrays.asList(menuInfos.get(0).getFEIGN_IDS().split(","));
+       }else {
+           throw new BusinessException("该角色未分配菜单");
        }
-       return menuInfosPer;
+       List<MenuInfo> infoList = menuMngerMapper.queryFirstMenu(ids); // -- 1 确定有多少一级菜单
+       List<MenuInfo> menuInfos1 = menuMngerMapper.queryAllMenuLevel(ids);
+       List<Integer> levelCollect = menuInfos1.stream().map(MenuInfo::getMenu_level).map(e -> Integer.valueOf(e)).collect(Collectors.toList());
+       int levelMax=levelCollect.stream().mapToInt(i->i).max().getAsInt(); //循环次数
+       List<MenuInfo> result=null;
+       getNextInfo(infoList,  result,levelMax,1,ids);
+       return infoList;
+   }
+
+   private List<MenuInfo> getNextInfo(List<MenuInfo> infoList,List<MenuInfo> menuInfos1,int levelMax,int currentId,List<String>menu_ids){
+       List<MenuInfo> nextIdsMenu=null;
+       if(currentId==levelMax){
+          return  infoList;
+       }else {
+           menuInfos1 = menuMngerMapper.queryNextLevelData(currentId,menu_ids);
+           if(menuInfos1!=null &&menuInfos1.size()>0){
+               int finalI = currentId;
+               List<MenuInfo> finalMenuInfos = menuInfos1;
+               nextIdsMenu = infoList.stream().map(e -> {
+                   List<MenuInfo> collect = finalMenuInfos.stream().filter(e1 -> e1.getMenu_level_parent()
+                           .equals(e.getMenu_id())).collect(Collectors.toList());
+                   Map res = new HashMap();
+                   res.put("nextIdsMenu", collect);
+                   e.setNextIdsMenu(res);
+                   int countts=currentId+1;
+                   getNextInfo(collect,menuMngerMapper.queryNextLevelData(countts,menu_ids),levelMax,countts,menu_ids);
+                   return e;
+               }).collect(Collectors.toList());
+               infoList=nextIdsMenu;
+               return infoList;
+           }else {
+               return  new ArrayList<MenuInfo>();
+           }
+
+       }
+
+
+
+
    }
 
     /**
