@@ -3,7 +3,6 @@ package com.NorthKingSys.jbf.cn.service;
 import com.NorthKingSys.jbf.cn.biz.BusinessException;
 import com.NorthKingSys.jbf.cn.biz.UsrPwdInfo;
 import com.NorthKingSys.jbf.cn.mapper.SysUsrMngerMapper;
-import com.NorthKingSys.jbf.cn.util.SnowflakeIdWorker;
 import com.NorthKingSys.jbf.cn.util.SnowflakeIdWorkerUntil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -11,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -61,7 +59,7 @@ public class SysUsrMngerService {
    public  Object queryUsrInfo(String userId, String roleId,Integer pageSize,Integer pageNum){
        PageHelper.startPage(pageNum,pageSize);
       List<UsrPwdInfo> lists=  sysUsrMngerMapper.queryUsrInfo(userId,roleId);
-       PageInfo<List<UsrPwdInfo>>pageInfo= new PageInfo<>(Collections.singletonList(lists));
+       PageInfo<UsrPwdInfo> pageInfo= new PageInfo<>(lists);
        return pageInfo;
    }
    public Object querySelect(){
