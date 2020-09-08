@@ -3,40 +3,71 @@
 <mapper namespace="com.NorthKingSys.jbf.cn.mapper.JbfRequireInfoMapper">
   <resultMap id="BaseResultMap" type="com.NorthKingSys.jbf.cn.domain.JbfRequireInfo">
     <id column="ID" jdbcType="INTEGER" property="id" />
-    <result column="NUMBER" jdbcType="VARCHAR" property="number" />
+    <result column="NUM_NO" jdbcType="VARCHAR" property="number" />
     <result column="REQUIRE_CUST" jdbcType="VARCHAR" property="requireCust" />
     <result column="PROJECT" jdbcType="VARCHAR" property="project" />
-    <result column="POSITION" jdbcType="VARCHAR" property="position" />
-    <result column="REQURE_NUM" jdbcType="INTEGER" property="requreNum" />
+    <result column="POSITIONS" jdbcType="VARCHAR" property="position" />
+    <result column="REQURE_NUM" jdbcType="VARCHAR" property="requreNum" />
     <result column="REQUEST" jdbcType="VARCHAR" property="request" />
     <result column="PRIORITY" jdbcType="VARCHAR" property="priority" />
     <result column="STUTAS" jdbcType="VARCHAR" property="stutas" />
-    <result column="CREAT_TIME" jdbcType="DATE" property="creatTime" />
-    <result column="END_TIME" jdbcType="DATE" property="endTime" />
+    <result column="CREAT_TIME" jdbcType="TIMESTAMP" property="creatTime" />
   </resultMap>
   <sql id="Base_Column_List">
-    ID, NUMBER, REQUIRE_CUST, PROJECT, POSITION, REQURE_NUM, REQUEST, PRIORITY, STUTAS, 
-    CREAT_TIME, END_TIME
+    ID, NUM_NO, REQUIRE_CUST, PROJECT, POSITIONS, REQURE_NUM, REQUEST, PRIORITY, STUTAS,
+    CREAT_TIME
   </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select 
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
     <include refid="Base_Column_List" />
     from JBF_REQUIRE_INFO
-    where ID = #{id,jdbcType=INTEGER}
+    where NUM_NO = #{number,jdbcType=VARCHAR}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+
+  <select id="selectRequireCustInfo" resultType="java.lang.String">
+    select
+    DISTINCT(REQUIRE_CUST)
+    from JBF_REQUIRE_INFO
+  </select>
+  <select id="selectRequireByCustName" resultType="java.lang.String" parameterType="map">
+    select
+    DISTINCT(PROJECT)
+    from JBF_REQUIRE_INFO
+    where 1=1
+    <if test="requreNum != null">
+    REQUIRE_CUST = #{custName}
+    </if>
+  </select>
+  <select id="selectRequireList" parameterType="map" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from JBF_REQUIRE_INFO t WHERE 1=1
+    <if test="requireCust!= null">
+      AND t.REQUIRE_CUST like '%${requireCust}%'
+    </if>
+    <if test="project != null">
+      AND t.PROJECT like '%${project}%'
+    </if>
+    <if test="position != null">
+      AND t.POSITIONS like '%${position}%'
+    </if>
+    <if test="requreNum != null">
+      AND t.REQURE_NUM = #{requreNum}
+    </if>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from JBF_REQUIRE_INFO
-    where ID = #{id,jdbcType=INTEGER}
+    where NUM_NO = #{number,jdbcType=VARCHAR}
   </delete>
   <insert id="insert" parameterType="com.NorthKingSys.jbf.cn.domain.JbfRequireInfo">
-    insert into JBF_REQUIRE_INFO (ID, NUMBER, REQUIRE_CUST, 
-      PROJECT, POSITION, REQURE_NUM, 
-      REQUEST, PRIORITY, STUTAS, 
-      CREAT_TIME, END_TIME)
-    values (#{id,jdbcType=INTEGER}, #{number,jdbcType=VARCHAR}, #{requireCust,jdbcType=VARCHAR}, 
-      #{project,jdbcType=VARCHAR}, #{position,jdbcType=VARCHAR}, #{requreNum,jdbcType=INTEGER}, 
-      #{request,jdbcType=VARCHAR}, #{priority,jdbcType=VARCHAR}, #{stutas,jdbcType=VARCHAR}, 
-      #{creatTime,jdbcType=DATE}, #{endTime,jdbcType=DATE})
+    insert into JBF_REQUIRE_INFO (ID, NUM_NO, REQUIRE_CUST,
+      PROJECT, POSITIONS, REQURE_NUM,
+      REQUEST, PRIORITY, STUTAS,
+      CREAT_TIME)
+    values (#{id,jdbcType=INTEGER}, #{number,jdbcType=VARCHAR}, #{requireCust,jdbcType=VARCHAR},
+      #{project,jdbcType=VARCHAR}, #{position,jdbcType=VARCHAR}, #{requreNum,jdbcType=VARCHAR},
+      #{request,jdbcType=VARCHAR}, #{priority,jdbcType=VARCHAR}, #{stutas,jdbcType=VARCHAR},
+      #{creatTime,jdbcType=DATE})
   </insert>
   <insert id="insertSelective" parameterType="com.NorthKingSys.jbf.cn.domain.JbfRequireInfo">
     insert into JBF_REQUIRE_INFO
@@ -45,7 +76,7 @@
         ID,
       </if>
       <if test="number != null">
-        NUMBER,
+        NUM_NO,
       </if>
       <if test="requireCust != null">
         REQUIRE_CUST,
@@ -54,7 +85,7 @@
         PROJECT,
       </if>
       <if test="position != null">
-        POSITION,
+        POSITIONS,
       </if>
       <if test="requreNum != null">
         REQURE_NUM,
@@ -69,10 +100,7 @@
         STUTAS,
       </if>
       <if test="creatTime != null">
-        CREAT_TIME,
-      </if>
-      <if test="endTime != null">
-        END_TIME,
+        CREAT_TIME
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -92,7 +120,7 @@
         #{position,jdbcType=VARCHAR},
       </if>
       <if test="requreNum != null">
-        #{requreNum,jdbcType=INTEGER},
+        #{requreNum,jdbcType=VARCHAR},
       </if>
       <if test="request != null">
         #{request,jdbcType=VARCHAR},
@@ -104,10 +132,7 @@
         #{stutas,jdbcType=VARCHAR},
       </if>
       <if test="creatTime != null">
-        #{creatTime,jdbcType=DATE},
-      </if>
-      <if test="endTime != null">
-        #{endTime,jdbcType=DATE},
+        #{creatTime,jdbcType=DATE}
       </if>
     </trim>
   </insert>
@@ -115,7 +140,7 @@
     update JBF_REQUIRE_INFO
     <set>
       <if test="number != null">
-        NUMBER = #{number,jdbcType=VARCHAR},
+        NUM_NO = #{number,jdbcType=VARCHAR},
       </if>
       <if test="requireCust != null">
         REQUIRE_CUST = #{requireCust,jdbcType=VARCHAR},
@@ -124,10 +149,10 @@
         PROJECT = #{project,jdbcType=VARCHAR},
       </if>
       <if test="position != null">
-        POSITION = #{position,jdbcType=VARCHAR},
+        POSITIONS = #{position,jdbcType=VARCHAR},
       </if>
       <if test="requreNum != null">
-        REQURE_NUM = #{requreNum,jdbcType=INTEGER},
+        REQURE_NUM = #{requreNum,jdbcType=VARCHAR},
       </if>
       <if test="request != null">
         REQUEST = #{request,jdbcType=VARCHAR},
@@ -139,27 +164,22 @@
         STUTAS = #{stutas,jdbcType=VARCHAR},
       </if>
       <if test="creatTime != null">
-        CREAT_TIME = #{creatTime,jdbcType=DATE},
-      </if>
-      <if test="endTime != null">
-        END_TIME = #{endTime,jdbcType=DATE},
+        CREAT_TIME = #{creatTime,jdbcType=DATE}
       </if>
     </set>
-    where ID = #{id,jdbcType=INTEGER}
+    where NUM_NO = #{number,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.NorthKingSys.jbf.cn.domain.JbfRequireInfo">
     update JBF_REQUIRE_INFO
-    set NUMBER = #{number,jdbcType=VARCHAR},
+    set NUM_NO = #{number,jdbcType=VARCHAR},
       REQUIRE_CUST = #{requireCust,jdbcType=VARCHAR},
       PROJECT = #{project,jdbcType=VARCHAR},
-      POSITION = #{position,jdbcType=VARCHAR},
-      REQURE_NUM = #{requreNum,jdbcType=INTEGER},
+      POSITIONS = #{position,jdbcType=VARCHAR},
+      REQURE_NUM = #{requreNum,jdbcType=VARCHAR},
       REQUEST = #{request,jdbcType=VARCHAR},
       PRIORITY = #{priority,jdbcType=VARCHAR},
       STUTAS = #{stutas,jdbcType=VARCHAR},
-      CREAT_TIME = #{creatTime,jdbcType=DATE},
-      END_TIME = #{endTime,jdbcType=DATE}
-    where ID = #{id,jdbcType=INTEGER}
+      CREAT_TIME = #{creatTime,jdbcType=DATE}
+    where where NUM_NO = #{number,jdbcType=VARCHAR}
   </update>
-
 </mapper>
