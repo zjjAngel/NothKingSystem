@@ -1,9 +1,9 @@
-package com.NorthKingSys.jbf.cn.project.controller;
+package com.NorthKingSys.jbf.cn.controller;
 
 import com.NorthKingSys.jbf.cn.biz.Result;
 import com.NorthKingSys.jbf.cn.domain.JbfProduct;
 import com.NorthKingSys.jbf.cn.mapper.JbfProductMapper;
-import com.NorthKingSys.jbf.cn.project.api.ProjectInfo;
+import com.NorthKingSys.jbf.cn.biz.ProjectInfo;
 import com.NorthKingSys.jbf.cn.util.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

@@ -1,7 +1,7 @@
 package com.NorthKingSys.jbf.cn.mapper;
 
 import com.NorthKingSys.jbf.cn.domain.JbfProduct;
-import com.NorthKingSys.jbf.cn.project.api.ProjectInfo;
+import com.NorthKingSys.jbf.cn.biz.ProjectInfo;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;

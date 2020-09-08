@@ -1,9 +1,8 @@
-package com.NorthKingSys.jbf.cn.cust.controller;
+package com.NorthKingSys.jbf.cn.controller;
 
 
 import com.NorthKingSys.jbf.cn.biz.BeanResult;
-import com.NorthKingSys.jbf.cn.biz.Result;
-import com.NorthKingSys.jbf.cn.cust.api.CustInfo;
+import com.NorthKingSys.jbf.cn.biz.CustInfo;
 import com.NorthKingSys.jbf.cn.domain.JbfCustInfo;
 import com.NorthKingSys.jbf.cn.mapper.JbfCustInfoMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -74,9 +73,8 @@ public class CustInfoController {
 
 
     @PostMapping("/add")
-    private BeanResult addCustInfo(@RequestBody CustInfo custInfo){
+    private  BeanResult addCustInfo(@RequestBody CustInfo custInfo){
         String clientno = null;
-
         String maxNo = getMaxCustNo();
         int maxNo1 = Integer.valueOf(maxNo);
         maxNo1++;
@@ -124,10 +122,11 @@ public class CustInfoController {
      * @param custInfo
      */
     @PostMapping("/del")
-    private void delClientInfo(@RequestBody  CustInfo custInfo){
+    private BeanResult delClientInfo(@RequestBody  CustInfo custInfo){
 
         Integer id = Integer.valueOf(custInfo.getCustno());
         jbfCustInfoMapper.deleteByPrimaryKey(id);
+        return new BeanResult();
 
     }
 

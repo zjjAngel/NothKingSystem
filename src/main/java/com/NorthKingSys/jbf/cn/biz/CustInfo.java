@@ -1,0 +1,24 @@
+package com.NorthKingSys.jbf.cn.biz;
+
+import lombok.Data;
+
+@Data
+public class CustInfo {
+
+    private String custno;
+
+    private String custname;
+
+    private String company;
+
+    private String mobileno;
+
+    private String adress;
+
+    private String region;
+
+    private String relationname;
+
+    private String relatemobilNo;
+
+}
