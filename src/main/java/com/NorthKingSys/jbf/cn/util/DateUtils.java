@@ -15,7 +15,7 @@ public class DateUtils {
         if(date == null){
             return null;
         }
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMdd");//注意月份是MM
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");//注意月份是MM
         Date newDate = new Date();
         try {
             newDate = simpleDateFormat.parse(date);

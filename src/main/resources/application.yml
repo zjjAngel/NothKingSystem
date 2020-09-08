@@ -6,7 +6,7 @@ spring:
   thymeleaf:
     cache: false
   datasource:
-    url: jdbc:mysql://192.168.0.142:3306/jbf?characterEncoding=utf8&characterSetResults=utf8&autoReconnect=true&failOverReadOnly=false
+    url: jdbc:mysql://192.168.0.142:3306/jbf?characterEncoding=utf8&characterSetResults=utf8&autoReconnect=true&failOverReadOnly=false&serverTimezone=Asia/Shanghai
     username: root
     password: 123456
   application:
@@ -50,4 +50,4 @@ thread-pool-factory:
 #com.jbf.jbfboot.Dao 将xml文件中的SQl打印出来
 logging:
   level:
-    com.jbf.jbfboot.Dao: DEBUG
+    com.jbf.jbfboot.Dao: INFO

@@ -92,7 +92,7 @@
         STATUS = #{status,jdbcType=VARCHAR},
       </if>
     </set>
-    where ID = #{id,jdbcType=INTEGER}
+    where PROD_NO = #{prodNo,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.NorthKingSys.jbf.cn.domain.JbfProduct">
     update JBF_PRODUCT

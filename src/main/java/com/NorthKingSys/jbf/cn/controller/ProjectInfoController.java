@@ -1,10 +1,12 @@
 package com.NorthKingSys.jbf.cn.controller;
 
+import com.NorthKingSys.jbf.cn.biz.BeanResult;
 import com.NorthKingSys.jbf.cn.biz.Result;
 import com.NorthKingSys.jbf.cn.domain.JbfProduct;
 import com.NorthKingSys.jbf.cn.mapper.JbfProductMapper;
 import com.NorthKingSys.jbf.cn.biz.ProjectInfo;
 import com.NorthKingSys.jbf.cn.util.DateUtils;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,7 +23,7 @@ import java.util.Map;
 @RestController
 @RequestMapping(value = "/project", method = RequestMethod.POST, produces = "application/json;charset=utf-8")
 public class ProjectInfoController {
-
+    private static Logger log = Logger.getLogger(ProjectInfoController.class.getClass());
     @Autowired
     JbfProductMapper jbfProductMapper;
     @Autowired
@@ -33,7 +35,7 @@ public class ProjectInfoController {
      * @return
      */
     @PostMapping("/add")
-    public String addProdInfo(@RequestBody ProjectInfo projectInfo){
+    public BeanResult addProdInfo(@RequestBody ProjectInfo projectInfo){
         String prodno = null;
         prodno = getMaxCustNo();
         int maxNo1 = Integer.valueOf(prodno);
@@ -46,8 +48,8 @@ public class ProjectInfoController {
         jbfProduct.setStartTime(dateUtils.parse(projectInfo.getStarttime()));
         jbfProduct.setStatus(projectInfo.getStatus());
         jbfProductMapper.insertSelective(jbfProduct);
-
-        return prodno;
+        projectInfo.setProdno(prodno);
+        return new BeanResult(projectInfo);
     }
 
     /**
@@ -56,14 +58,18 @@ public class ProjectInfoController {
      * @return
      */
     @PostMapping("/upd")
-    public void updProdInfo(@RequestBody  ProjectInfo projectInfo){
+    public BeanResult updProdInfo(@RequestBody  ProjectInfo projectInfo){
         JbfProduct jbfProduct = new JbfProduct();
         jbfProduct.setProdNo(projectInfo.getProdno());
         jbfProduct.setProdName(projectInfo.getProdname());
         jbfProduct.setProdType(projectInfo.getProdtype());
+        log.info("projectInfo==="+projectInfo.toString());
         jbfProduct.setStartTime(dateUtils.parse(projectInfo.getStarttime()));
         jbfProduct.setStatus(projectInfo.getStatus());
+        log.info("jbfProduct==="+jbfProduct.getStartTime());
         jbfProductMapper.updateByPrimaryKeySelective(jbfProduct);
+
+        return new BeanResult(projectInfo);
     }
 
     /**
@@ -117,8 +123,9 @@ public class ProjectInfoController {
      * @return
      */
     @PostMapping("/del")
-    public void delProdInfo(@RequestBody  ProjectInfo projectInfo){
+    public BeanResult delProdInfo(@RequestBody  ProjectInfo projectInfo){
         jbfProductMapper.deleteByPrimaryKey(projectInfo.getProdno());
+        return new BeanResult();
     }
 
 
