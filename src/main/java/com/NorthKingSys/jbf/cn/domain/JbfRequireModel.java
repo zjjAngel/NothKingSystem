@@ -2,8 +2,7 @@ package com.NorthKingSys.jbf.cn.domain;
 
 import java.util.Date;
 
-public class JbfRequireInfo {
-    private Integer id;
+public class JbfRequireModel {
 
     private String number;
 
@@ -20,36 +19,6 @@ public class JbfRequireInfo {
     private String priority;
 
     private String stutas;
-
-    private Date creatTime;
-
-    private int pageSize;
-
-    private int pageNum;
-
-    public int getPageSize() {
-        return pageSize;
-    }
-
-    public void setPageSize(int pageSize) {
-        this.pageSize = pageSize;
-    }
-
-    public int getPageNum() {
-        return pageNum;
-    }
-
-    public void setPageNum(int pageNum) {
-        this.pageNum = pageNum;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
 
     public String getNumber() {
         return number;
@@ -113,13 +82,5 @@ public class JbfRequireInfo {
 
     public void setStutas(String stutas) {
         this.stutas = stutas == null ? null : stutas.trim();
-    }
-
-    public Date getCreatTime() {
-        return creatTime;
-    }
-
-    public void setCreatTime(Date creatTime) {
-        this.creatTime = creatTime;
     }
 }

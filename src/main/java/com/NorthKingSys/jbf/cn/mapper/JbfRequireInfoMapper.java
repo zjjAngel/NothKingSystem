@@ -1,17 +1,29 @@
 package com.NorthKingSys.jbf.cn.mapper;
 
 import com.NorthKingSys.jbf.cn.domain.JbfRequireInfo;
+import org.apache.ibatis.annotations.Mapper;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+@Mapper
 public interface JbfRequireInfoMapper {
-    int deleteByPrimaryKey(Integer id);
+    int deleteByPrimaryKey(String number);
 
     int insert(JbfRequireInfo record);
 
     int insertSelective(JbfRequireInfo record);
 
-    JbfRequireInfo selectByPrimaryKey(Integer id);
+    JbfRequireInfo selectByPrimaryKey(String number);
 
     int updateByPrimaryKeySelective(JbfRequireInfo record);
 
     int updateByPrimaryKey(JbfRequireInfo record);
+
+    List<String> selectRequireCustInfo();
+
+    List<JbfRequireInfo> selectRequireList(Map map);
+
+    List<String> selectRequireByCustName(Map map);
 }
