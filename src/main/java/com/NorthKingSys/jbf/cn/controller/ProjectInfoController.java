@@ -33,7 +33,7 @@ public class ProjectInfoController {
      * @return
      */
     @PostMapping("/add")
-    private String addProdInfo(@RequestBody ProjectInfo projectInfo){
+    public String addProdInfo(@RequestBody ProjectInfo projectInfo){
         String prodno = null;
         prodno = getMaxCustNo();
         int maxNo1 = Integer.valueOf(prodno);
@@ -56,7 +56,7 @@ public class ProjectInfoController {
      * @return
      */
     @PostMapping("/upd")
-    private void updProdInfo(@RequestBody  ProjectInfo projectInfo){
+    public void updProdInfo(@RequestBody  ProjectInfo projectInfo){
         JbfProduct jbfProduct = new JbfProduct();
         jbfProduct.setProdNo(projectInfo.getProdno());
         jbfProduct.setProdName(projectInfo.getProdname());
@@ -72,7 +72,7 @@ public class ProjectInfoController {
      * @return  List<ProjectInfo>
      */
     @PostMapping("/query")
-    private Result queryProdInfo(@RequestBody  ProjectInfo projectInfo){
+    public Result queryProdInfo(@RequestBody  ProjectInfo projectInfo){
         Result result = new Result();
 
         List<ProjectInfo> projectInfoss = new ArrayList<>();
@@ -117,12 +117,12 @@ public class ProjectInfoController {
      * @return
      */
     @PostMapping("/del")
-    private void delProdInfo(@RequestBody  ProjectInfo projectInfo){
+    public void delProdInfo(@RequestBody  ProjectInfo projectInfo){
         jbfProductMapper.deleteByPrimaryKey(projectInfo.getProdno());
     }
 
 
-    private  synchronized String  getMaxCustNo(){
+    public  synchronized String  getMaxCustNo(){
 
         String maxCustNo = jbfProductMapper.getMaxCustNo();
         if(maxCustNo == null){

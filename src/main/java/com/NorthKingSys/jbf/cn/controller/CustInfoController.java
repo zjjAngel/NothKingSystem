@@ -33,7 +33,7 @@ public class CustInfoController {
      * @return
      */
     @PostMapping("/query")
-    private BeanResult queryCustInfo(@RequestBody CustInfo custInfo){
+    public BeanResult queryCustInfo(@RequestBody CustInfo custInfo){
         List<JbfCustInfo> jbfCustInfos = new ArrayList<>();
         List<CustInfo> queryClients = new ArrayList<>();
 
@@ -73,7 +73,7 @@ public class CustInfoController {
 
 
     @PostMapping("/add")
-    private  BeanResult addCustInfo(@RequestBody CustInfo custInfo){
+    public  BeanResult addCustInfo(@RequestBody CustInfo custInfo){
         String clientno = null;
         String maxNo = getMaxCustNo();
         int maxNo1 = Integer.valueOf(maxNo);
@@ -100,7 +100,7 @@ public class CustInfoController {
      * @param custInfo
      */
     @PostMapping("/update")
-    private BeanResult updateClientInfo(@RequestBody CustInfo custInfo){
+    public BeanResult updateClientInfo(@RequestBody CustInfo custInfo){
 
         JbfCustInfo jbfCustInfo = new JbfCustInfo();
         jbfCustInfo.setCustNo(custInfo.getCustno());
@@ -122,7 +122,7 @@ public class CustInfoController {
      * @param custInfo
      */
     @PostMapping("/del")
-    private BeanResult delClientInfo(@RequestBody  CustInfo custInfo){
+    public BeanResult delClientInfo(@RequestBody  CustInfo custInfo){
 
         Integer id = Integer.valueOf(custInfo.getCustno());
         jbfCustInfoMapper.deleteByPrimaryKey(id);
@@ -131,7 +131,7 @@ public class CustInfoController {
     }
 
 
-    private  synchronized String  getMaxCustNo(){
+    public  synchronized String  getMaxCustNo(){
 
         String maxCustNo = jbfCustInfoMapper.getMaxCustNo();
         if(maxCustNo == null){
