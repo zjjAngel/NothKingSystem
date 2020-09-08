@@ -21,4 +21,8 @@ public class CustInfo {
 
     private String relatemobilNo;
 
+    private int page;
+
+    private int size;
+
 }

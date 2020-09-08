@@ -29,4 +29,8 @@ public class ProjectInfo {
 
     private String status;
 
+    private int page;
+
+    private int size;
+
 }

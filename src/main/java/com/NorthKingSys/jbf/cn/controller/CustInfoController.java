@@ -5,6 +5,7 @@ import com.NorthKingSys.jbf.cn.biz.BeanResult;
 import com.NorthKingSys.jbf.cn.biz.CustInfo;
 import com.NorthKingSys.jbf.cn.domain.JbfCustInfo;
 import com.NorthKingSys.jbf.cn.mapper.JbfCustInfoMapper;
+import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.apache.log4j.Logger;
@@ -42,7 +43,7 @@ public class CustInfoController {
         map.put("company",custInfo.getCompany());
         map.put("region",custInfo.getRegion());
         map.put("relationname",custInfo.getRelationname());
-
+        PageHelper.startPage(custInfo.getPage(),custInfo.getSize());
         jbfCustInfos = jbfCustInfoMapper.selectByClientInfo(map);
         if(jbfCustInfos ==null || jbfCustInfos.size()<=0){
             //  抛出异常 查询无返回记录

@@ -6,6 +6,7 @@ import com.NorthKingSys.jbf.cn.domain.JbfProduct;
 import com.NorthKingSys.jbf.cn.mapper.JbfProductMapper;
 import com.NorthKingSys.jbf.cn.biz.ProjectInfo;
 import com.NorthKingSys.jbf.cn.util.DateUtils;
+import com.github.pagehelper.PageHelper;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -78,8 +79,7 @@ public class ProjectInfoController {
      * @return  List<ProjectInfo>
      */
     @PostMapping("/query")
-    public Result queryProdInfo(@RequestBody  ProjectInfo projectInfo){
-        Result result = new Result();
+    public BeanResult queryProdInfo(@RequestBody ProjectInfo projectInfo){
 
         List<ProjectInfo> projectInfoss = new ArrayList<>();
 
@@ -93,6 +93,7 @@ public class ProjectInfoController {
         map.put("starttime",startTime);
         map.put("status",projectInfo.getStatus());
 
+        PageHelper.startPage(projectInfo.getPage(),projectInfo.getSize());
         List<ProjectInfo> projectInfos = jbfProductMapper.getProductInfo(map);
 
         if(projectInfos != null && projectInfos.size()>0){
@@ -106,15 +107,15 @@ public class ProjectInfoController {
                 projectInfoss.add(projectInfo2);
             }
         }
-        if(projectInfoss != null && projectInfoss.size()>0){
-            result.setData(projectInfoss);
-            result.setCode(0000);
-            result.setMsg("SUCCESS");
-        }else {
-            result.setCode(4000);
-            result.setMsg("没有纪录");
-        }
-        return result;
+//        if(projectInfoss != null && projectInfoss.size()>0){
+//            result.setData(projectInfoss);
+//            result.setCode(0000);
+//            result.setMsg("SUCCESS");
+//        }else {
+//            result.setCode(4000);
+//            result.setMsg("没有纪录");
+//        }
+        return new BeanResult(projectInfoss);
     }
 
     /**
