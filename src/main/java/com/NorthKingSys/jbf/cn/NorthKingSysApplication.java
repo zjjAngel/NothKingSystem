@@ -1,6 +1,6 @@
 package com.NorthKingSys.jbf.cn;
 
-import com.NorthKingSys.jbf.cn.config.file.LogCostFilter;
+import com.NorthKingSys.jbf.cn.config.filter.LogCostFilter;
 import com.NorthKingSys.jbf.cn.util.JedisUtil;
 import com.NorthKingSys.jbf.cn.util.SpringContextUtil;
 import org.mybatis.spring.annotation.MapperScan;

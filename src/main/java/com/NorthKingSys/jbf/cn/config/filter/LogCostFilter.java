@@ -1,4 +1,4 @@
-package com.NorthKingSys.jbf.cn.config.file;
+package com.NorthKingSys.jbf.cn.config.filter;
 import com.NorthKingSys.jbf.cn.domain.UserBack;
 import com.NorthKingSys.jbf.cn.util.JedisUtil;
 import com.NorthKingSys.jbf.cn.util.SpringContextUtil;
