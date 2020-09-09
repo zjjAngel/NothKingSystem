@@ -27,6 +27,16 @@ public class JbfRequireInfo {
 
     private int pageNum;
 
+    private String status;//删除状态
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
     public int getPageSize() {
         return pageSize;
     }

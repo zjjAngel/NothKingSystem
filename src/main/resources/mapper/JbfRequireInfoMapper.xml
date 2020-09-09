@@ -12,10 +12,11 @@
     <result column="PRIORITY" jdbcType="VARCHAR" property="priority" />
     <result column="STUTAS" jdbcType="VARCHAR" property="stutas" />
     <result column="CREAT_TIME" jdbcType="TIMESTAMP" property="creatTime" />
+    <result column="STATUS" jdbcType="VARCHAR" property="status" />
   </resultMap>
   <sql id="Base_Column_List">
     ID, NUM_NO, REQUIRE_CUST, PROJECT, POSITIONS, REQURE_NUM, REQUEST, PRIORITY, STUTAS,
-    CREAT_TIME
+    CREAT_TIME, STATUS
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select
@@ -41,7 +42,7 @@
   <select id="selectRequireList" parameterType="map" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
-    from JBF_REQUIRE_INFO t WHERE 1=1
+    from JBF_REQUIRE_INFO t WHERE 1=1 AND STATUS='1'
     <if test="requireCust!= null">
       AND t.REQUIRE_CUST like '%${requireCust}%'
     </if>
@@ -55,19 +56,23 @@
       AND t.REQURE_NUM = #{requreNum}
     </if>
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
-    delete from JBF_REQUIRE_INFO
+  <update id="updateStatusByNumber" parameterType="java.lang.String">
+    update JBF_REQUIRE_INFO
+    set
+    <if test="number != null">
+    STATUS = #{status,jdbcType=VARCHAR},
+    </if>
     where NUM_NO = #{number,jdbcType=VARCHAR}
-  </delete>
+  </update>
   <insert id="insert" parameterType="com.NorthKingSys.jbf.cn.domain.JbfRequireInfo">
     insert into JBF_REQUIRE_INFO (ID, NUM_NO, REQUIRE_CUST,
       PROJECT, POSITIONS, REQURE_NUM,
       REQUEST, PRIORITY, STUTAS,
-      CREAT_TIME)
+      CREAT_TIME, STATUS)
     values (#{id,jdbcType=INTEGER}, #{number,jdbcType=VARCHAR}, #{requireCust,jdbcType=VARCHAR},
       #{project,jdbcType=VARCHAR}, #{position,jdbcType=VARCHAR}, #{requreNum,jdbcType=VARCHAR},
       #{request,jdbcType=VARCHAR}, #{priority,jdbcType=VARCHAR}, #{stutas,jdbcType=VARCHAR},
-      #{creatTime,jdbcType=DATE})
+      #{creatTime,jdbcType=DATE}, #{status,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.NorthKingSys.jbf.cn.domain.JbfRequireInfo">
     insert into JBF_REQUIRE_INFO
@@ -100,7 +105,10 @@
         STUTAS,
       </if>
       <if test="creatTime != null">
-        CREAT_TIME
+        CREAT_TIME,
+      </if>
+      <if test="status != null">
+        STATUS
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -132,7 +140,10 @@
         #{stutas,jdbcType=VARCHAR},
       </if>
       <if test="creatTime != null">
-        #{creatTime,jdbcType=DATE}
+        #{creatTime,jdbcType=DATE},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
