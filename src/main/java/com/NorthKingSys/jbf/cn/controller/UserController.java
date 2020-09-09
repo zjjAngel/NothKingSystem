@@ -3,6 +3,7 @@ package com.NorthKingSys.jbf.cn.controller;
 import com.NorthKingSys.jbf.cn.biz.BusinessException;
 import com.NorthKingSys.jbf.cn.biz.JBFErrorCode;
 import com.NorthKingSys.jbf.cn.biz.Result;
+import com.NorthKingSys.jbf.cn.biz.UsrPwdInfo;
 import com.NorthKingSys.jbf.cn.config.RedisConfig;
 import com.NorthKingSys.jbf.cn.domain.RoleInfo;
 import com.NorthKingSys.jbf.cn.domain.UserBack;
@@ -58,7 +59,7 @@ public class UserController {
         if (StringUtils.isEmpty(String.valueOf(req.get("password")))){
             throw new BusinessException(JBFErrorCode.NULL_OBJ);
         }
-        Map rslt=new HashMap();
+        UsrPwdInfo  rslt=null;
         List<Map> res= userService.selectUser(String.valueOf(req.get("username")),String.valueOf(req.get("password")));
         if(null!=res && res.size()>=0){
             if(res.size()==1){
@@ -69,10 +70,9 @@ public class UserController {
                 Object effect_date = res.get(0).get("effect_date");
 //                effect_date
                 String sessionId = request.getSession().getId();
-                rslt.put("user_name",user_name);
-                rslt.put("user_role",user_role);
-                rslt.put("user_id",user_id);
-                rslt.put("sessionId",sessionId);
+                    rslt = UsrPwdInfo.builder().user_name(String.valueOf(user_name))
+                        .user_role(String.valueOf(user_role))
+                        .user_id(String.valueOf(user_id)).sessionId(sessionId);
                 jedisUtil.set(sessionId,user_name, Long.valueOf(String.valueOf(effect_date)) ,TimeUnit.HOURS);
             }else {
              throw new BusinessException("非法用户,同一用户名 密码的账号存在两个及其以上");

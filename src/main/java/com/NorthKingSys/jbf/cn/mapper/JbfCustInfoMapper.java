@@ -2,6 +2,9 @@ package com.NorthKingSys.jbf.cn.mapper;
 
 import com.NorthKingSys.jbf.cn.domain.JbfCustInfo;
 
+import java.util.List;
+import java.util.Map;
+
 public interface JbfCustInfoMapper {
     int deleteByPrimaryKey(Integer id);
 
@@ -14,4 +17,8 @@ public interface JbfCustInfoMapper {
     int updateByPrimaryKeySelective(JbfCustInfo record);
 
     int updateByPrimaryKey(JbfCustInfo record);
+
+    List<JbfCustInfo> selectByClientInfo(Map map);
+
+    String getMaxCustNo();
 }

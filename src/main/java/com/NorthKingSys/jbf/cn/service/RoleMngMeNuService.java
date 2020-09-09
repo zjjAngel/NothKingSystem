@@ -131,7 +131,8 @@ public class RoleMngMeNuService {
        }
        List<MenuInfo> infoList = menuMngerMapper.queryFirstMenu(ids); // -- 1 确定有多少一级菜单
        List<MenuInfo> menuInfos1 = menuMngerMapper.queryAllMenuLevel(ids);
-       List<Integer> levelCollect = menuInfos1.stream().map(MenuInfo::getMenu_level).map(e -> Integer.valueOf(e)).collect(Collectors.toList());
+       List<Integer> levelCollect = menuInfos1.stream().map(MenuInfo::getMenu_level)
+               .map(e -> Integer.valueOf(e)).collect(Collectors.toList());
        int levelMax=levelCollect.stream().mapToInt(i->i).max().getAsInt(); //循环次数
        List<MenuInfo> result=null;
        getNextInfo(infoList,  result,levelMax,1,ids);
@@ -148,7 +149,8 @@ public class RoleMngMeNuService {
                int finalI = currentId;
                List<MenuInfo> finalMenuInfos = menuInfos1;
                nextIdsMenu = infoList.stream().map(e -> {
-                   List<MenuInfo> collect = finalMenuInfos.stream().filter(e1 -> e1.getMenu_level_parent()
+                   List<MenuInfo> collect = finalMenuInfos.stream()
+                           .filter(e1 -> e1.getMenu_level_parent()
                            .equals(e.getMenu_id())).collect(Collectors.toList());
                    Map res = new HashMap();
                    res.put("nextIdsMenu", collect);

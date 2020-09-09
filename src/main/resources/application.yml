@@ -6,7 +6,7 @@ spring:
   thymeleaf:
     cache: false
   datasource:
-    url: jdbc:mysql://192.168.42.143:3307/jbf?characterEncoding=utf8&characterSetResults=utf8&autoReconnect=true&failOverReadOnly=false
+    url: jdbc:mysql://192.168.42.143:3307/jbf?characterEncoding=utf8&characterSetResults=utf8&autoReconnect=true&failOverReadOnly=false&serverTimezone=Asia/Shanghai
     username: root
     password: 123456
   application:
@@ -49,6 +49,8 @@ pagehelper:
 mybatis:
   type-aliases-package: com.NorthKingSys.jbf.cn.mapper
   mapper-locations: classpath:mapper/*.xml
+  configuration:
+    map-underscore-to-camel-case: true
 #IO密集型应用，线程数为2N+1
 thread-pool-factory:
   corePoolSize: 9
@@ -57,6 +59,9 @@ thread-pool-factory:
   keepAliveSeconds: 120
 logging.level.com.NorthKingSys.jbf.cn.mapper : debug
 
+logging:
+  level:
+    com.jbf.jbfboot.Dao: DEBUG
 #配置redis
 #  spring.redis.host=localhost
 #  spring.redis.password=
