@@ -138,6 +138,23 @@ public class RoleMngMeNuService {
        getNextInfo(infoList,  result,levelMax,1,ids);
        return infoList;
    }
+   public List<MenuInfo> getAllMenus(String level){
+       List<MenuInfo> menuInfos= menuMngerMapper.queryAllMenu(null,null);
+       List<String> ids=null;
+       if(menuInfos.size()>0){
+           ids= menuInfos.stream().map(MenuInfo::getMenu_id).collect(Collectors.toList());
+       }else {
+           throw new BusinessException("该角色未分配菜单");
+       }
+       List<MenuInfo> infoList = menuMngerMapper.queryFirstMenu(ids);
+       List<MenuInfo> menuInfos1 = menuMngerMapper.queryAllMenuLevel(ids);
+       List<Integer> levelCollect = menuInfos1.stream().map(MenuInfo::getMenu_level)
+               .map(e -> Integer.valueOf(e)).collect(Collectors.toList());
+       int levelMax=levelCollect.stream().mapToInt(i->i).max().getAsInt(); //循环次数
+       List<MenuInfo> result=null;
+       getNextInfo(infoList,  result,levelMax,1,ids);
+       return infoList;
+   }
 
    private List<MenuInfo> getNextInfo(List<MenuInfo> infoList,List<MenuInfo> menuInfos1,int levelMax,int currentId,List<String>menu_ids){
        List<MenuInfo> nextIdsMenu=null;

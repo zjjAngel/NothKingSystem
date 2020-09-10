@@ -90,6 +90,13 @@ public class RoleMngMeNuController {
     public Result<?> queryMenuByCurrentLevel(@RequestParam(value = "level",required = false,defaultValue = "1") String level){
         return ResultUtil.success(roleMngMeNuService.queryMenuByCurrentLevel(level));
     }
+    /**
+     * 获取某一等级下的所有嵌套菜单
+     */
+    @GetMapping("/getAllMenus")
+    public Result<?> getAllMenus(@RequestParam(value = "level",required = false,defaultValue = "1")String level){
+        return ResultUtil.success(roleMngMeNuService.getAllMenus(level));
+    }
 
     /**
      * 左侧下一级菜单查询

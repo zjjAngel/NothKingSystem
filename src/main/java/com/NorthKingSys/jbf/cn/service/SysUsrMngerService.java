@@ -25,17 +25,17 @@ public class SysUsrMngerService {
     @Transactional
     public Object insertUser(Map re){
         //查看用户名 是否被占用
-        List<Map> maps = sysUsrMngerMapper.selectUsr(String.valueOf(re.get("username")));
+        List<Map> maps = sysUsrMngerMapper.selectUsr(String.valueOf(re.get("user_name")));
         Optional<List<Map>> mapsOpt = Optional.of(maps);
         if(mapsOpt.isPresent()&&maps!=null&&maps.size()>0){
             throw new BusinessException(-1,"该用户已名已经被占用");
         }
         String usrId= SnowflakeIdWorkerUntil.usrIdNextId();
-      int result=  sysUsrMngerMapper.insertUser(String.valueOf(re.get("username")),
-                String.valueOf(re.get("backup")),String.valueOf(re.get("transRole")),
+      int result=  sysUsrMngerMapper.insertUser(String.valueOf(re.get("user_name")),
+                String.valueOf(re.get("back_up")),String.valueOf(re.get("transRole")),
                 usrId);
         sysUsrMngerMapper.insertPassWord(usrId,
-                String.valueOf(re.get("username")),String.valueOf(re.get("password")));
+                String.valueOf(re.get("user_name")),String.valueOf(re.get("password")));
         //刚设置的账号默认三天内有效
         return result;
    }
