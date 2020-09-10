@@ -1,6 +1,7 @@
 package com.NorthKingSys.jbf.cn.mapper;
 
 import com.NorthKingSys.jbf.cn.biz.MenuInfo;
+import com.NorthKingSys.jbf.cn.biz.UsrPwdInfo;
 import com.NorthKingSys.jbf.cn.domain.RoleInfo;
 import org.apache.ibatis.annotations.Param;
 
@@ -22,4 +23,9 @@ public interface RoleMngMeNuMapper {
                                          @Param("back_up")String back_up, @Param("feign_ids")String feign_ids);
 //    List<RoleInfo> queryUsrByRoleId(@Param("role_id")String role_id);
      int deletebyRoleId(@Param("role_id")String role_id);
+    /**
+     * 用户角色下拉接口
+     * @return
+     */
+    List<RoleInfo> querySelect();
 }

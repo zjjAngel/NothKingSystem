@@ -87,7 +87,8 @@
         select t.user_id,t.user_name,t.create_time,t.user_role,
         t.role_name,
   <!--  r.FEIGN_IDS-->
-          p.password
+          p.password,
+          u.back_up
           from (
           select a.user_id,a.user_name,a.create_time,a.user_role, b.role_name from JBF_USER a
           left join JBF_ROLE b
@@ -105,7 +106,10 @@
         JBF_USER_PWD p
         on
         t.USER_ID= p.USER_ID
-
+        left join
+        JBF_USER u
+        on
+        t.USER_ID= u.USER_ID
     </select>
 
     <select id="querySelect" resultType="com.NorthKingSys.jbf.cn.biz.UsrPwdInfo">

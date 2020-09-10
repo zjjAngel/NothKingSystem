@@ -79,6 +79,7 @@ public class SysUsrMngerController {
      * @return
      */
     @GetMapping("/querySelectRole")
+    @ResponseBody
     public Result<?> querySelect(){
         return ResultUtil.success(sysUsrMngerService.querySelect());
     }

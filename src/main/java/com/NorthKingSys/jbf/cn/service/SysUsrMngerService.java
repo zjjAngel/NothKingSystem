@@ -2,6 +2,7 @@ package com.NorthKingSys.jbf.cn.service;
 
 import com.NorthKingSys.jbf.cn.biz.BusinessException;
 import com.NorthKingSys.jbf.cn.biz.UsrPwdInfo;
+import com.NorthKingSys.jbf.cn.mapper.RoleMngMeNuMapper;
 import com.NorthKingSys.jbf.cn.mapper.SysUsrMngerMapper;
 import com.NorthKingSys.jbf.cn.util.SnowflakeIdWorkerUntil;
 import com.github.pagehelper.PageHelper;
@@ -17,7 +18,9 @@ import java.util.Optional;
 @Service
 public class SysUsrMngerService {
     @Autowired
-    SysUsrMngerMapper sysUsrMngerMapper;
+    private SysUsrMngerMapper sysUsrMngerMapper;
+    @Autowired
+    private RoleMngMeNuMapper roleMngMeNuMapper;
 
     @Transactional
     public Object insertUser(Map re){
@@ -56,14 +59,14 @@ public class SysUsrMngerService {
      }
      return res;
    }
-   public  Object queryUsrInfo(String userId, String roleId,Integer pageSize,Integer pageNum){
+   public  Object queryUsrInfo(String userId, String roleId,Integer pageNum ,Integer pageSize ){
        PageHelper.startPage(pageNum,pageSize);
       List<UsrPwdInfo> lists=  sysUsrMngerMapper.queryUsrInfo(userId,roleId);
        PageInfo<UsrPwdInfo> pageInfo= new PageInfo<>(lists);
        return pageInfo;
    }
    public Object querySelect(){
-        return sysUsrMngerMapper.querySelect();
+        return roleMngMeNuMapper.querySelect();
    }
    public Object querySelectUsr(){
         return sysUsrMngerMapper.querySelectUsr();

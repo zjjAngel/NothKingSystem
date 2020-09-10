@@ -18,8 +18,8 @@ import java.io.IOException;
 import java.io.PrintWriter;
 @Component
 public class AdminInterceptor implements HandlerInterceptor {
-    @Autowired
-    UserController userController;
+//    @Autowired
+//    UserController userController;
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 //        if (request.getSession().getAttribute("user") == null) {
@@ -79,35 +79,19 @@ public class AdminInterceptor implements HandlerInterceptor {
         return true;
     }
 
-    @Override
-    public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
-
-    }
-
-    @Override
-    public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
-//        response.setHeader("Access-Control-Allow-Credentials", "true");
-//        response.setHeader("Access-Control-Allow-Headers", "Authorization, Content-Type, X-Requested-With, token");
-//        response.setHeader("Access-Control-Allow-Methods", "GET, HEAD, OPTIONS, POST, PUT, DELETE");
-//        response.setHeader("Access-Control-Allow-Origin", "*");
-//        response.setHeader("Access-Control-Max-Age", "3600");
-    }
-//    private boolean loginOut(HttpServletRequest request, HttpServletResponse response, Object handler) throws IOException {
-//        response.setCharacterEncoding("UTF-8");
-//        response.setContentType("application/json; charset=utf-8");
-//        PrintWriter out = null;
-//        try {
-//            JSONObject res = new JSONObject();
-//            res.put("success", false);
-//            res.put("message", "用户已退出！");
-//            out = response.getWriter();
-//            out.append(res.toString());
-//            return false;
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            response.sendError(500);
-//            return false;
-//        }
+//    @Override
+//    public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
+//
 //    }
+
+//    @Override
+//    public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
+////        response.setHeader("Access-Control-Allow-Credentials", "true");
+////        response.setHeader("Access-Control-Allow-Headers", "Authorization, Content-Type, X-Requested-With, token");
+////        response.setHeader("Access-Control-Allow-Methods", "GET, HEAD, OPTIONS, POST, PUT, DELETE");
+////        response.setHeader("Access-Control-Allow-Origin", "*");
+////        response.setHeader("Access-Control-Max-Age", "3600");
+//    }
+
 
 }

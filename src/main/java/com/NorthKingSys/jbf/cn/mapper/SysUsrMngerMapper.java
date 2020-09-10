@@ -21,7 +21,17 @@ public interface SysUsrMngerMapper {
     int deleteUsrInfo(@Param("userId")String userId);
     int deletePwdInfo(@Param("userId")String userId);
     List<UsrPwdInfo> queryUsrInfo(@Param("userId")String userId, @Param("roleId")String roleId);
+
+    /**
+     * 用户角色下拉接口
+     * @return
+     */
     List<UsrPwdInfo> querySelect();
+
+    /**
+     *
+     * @return
+     */
     List<UsrPwdInfo> querySelectUsr();
     int deleteUsr(@Param("list")List<String> userId);
 }

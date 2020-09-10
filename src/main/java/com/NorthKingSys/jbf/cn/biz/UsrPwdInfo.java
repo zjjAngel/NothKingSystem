@@ -14,6 +14,7 @@ public class UsrPwdInfo {
     private String password;
     private String role_id;
     private String sessionId;
+    private String back_up;
 
     public UsrPwdInfo sessionId(String sessionId) {
         this.sessionId = sessionId;

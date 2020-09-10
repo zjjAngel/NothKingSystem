@@ -80,7 +80,14 @@
             </if>
         </where>
     </select>
-<!--    <select id="queryUsrByRoleId" resultType="com.NorthKingSys.jbf.cn.domain.RoleInfo">-->
+    <resultMap id="roleInfo" type="com.NorthKingSys.jbf.cn.domain.RoleInfo">
+        <result column="ROLE_ID" jdbcType="VARCHAR" property="role_id"/>
+        <result column="ROLE_NAME" jdbcType="VARCHAR" property="role_name"/>
+    </resultMap>
+    <select id="querySelect" resultMap="roleInfo">
+         select r.role_id,r.role_name from JBF_ROLE r
+    </select>
+    <!--    <select id="queryUsrByRoleId" resultType="com.NorthKingSys.jbf.cn.domain.RoleInfo">-->
 <!--        -->
 <!--    </select>-->
     <!--    <select id="queryAllMenu" resultType="com.NorthKingSys.jbf.cn.biz.MenuInfo">-->

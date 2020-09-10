@@ -20,7 +20,7 @@ public class HttpAspect {
     private final static Logger LOGGER = LoggerFactory.getLogger(HttpAspect.class);
     @Autowired
     private ExceptionHandle exceptionHandle;
-    @Pointcut("execution(public * com.NorthKingSys.jbf.cn.*.*(..))")
+    @Pointcut("execution(public * com.NorthKingSys.jbf.cn.controller.*.*(..))")
     public void log(){
     }
     @Before("log()")
@@ -43,24 +43,24 @@ public class HttpAspect {
     }
 
 
-    @Around("log()")
-    public Object doAround(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
-        return proceedingJoinPoint.proceed();
-//        Result result = null;
-//        try {
-//
-//        } catch (Exception e) {
-//            return exceptionHandle.exceptionGet(e);
-//        }
-//        if(result == null){
-//            return proceedingJoinPoint.proceed();
-//        }else {
-//            return result;
-//        }
-    }
+//    @Around("log()")
+//    public Object doAround(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
+//        return proceedingJoinPoint.proceed();
+////        Result result = null;
+////        try {
+////
+////        } catch (Exception e) {
+////            return exceptionHandle.exceptionGet(e);
+////        }
+////        if(result == null){
+////            return proceedingJoinPoint.proceed();
+////        }else {
+////            return result;
+////        }
+//    }
 
-    @AfterReturning(pointcut = "log()",returning = "object")//打印输出结果
-    public void doAfterReturing(Object object){
-        LOGGER.info("response={}",object.toString());
-    }
+//    @AfterReturning(pointcut = "log()",returning = "object")//打印输出结果
+//    public void doAfterReturing(Object object){
+//        LOGGER.info("response={}",object.toString());
+//    }
 }

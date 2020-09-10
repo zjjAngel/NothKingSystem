@@ -15,6 +15,35 @@ public class RoleInfo {
 
     private String FEIGN_IDS;
 
+    private String role_id;
+    private String role_name;
+
+    public RoleInfo(Integer id, String ROLE_ID, String ROLE_NAME, String BACK_UP, String FEIGN_IDS, String role_id, String role_name) {
+        this.id = id;
+        this.ROLE_ID = ROLE_ID;
+        this.ROLE_NAME = ROLE_NAME;
+        this.BACK_UP = BACK_UP;
+        this.FEIGN_IDS = FEIGN_IDS;
+        this.role_id = role_id;
+        this.role_name = role_name;
+    }
+
+    public String getRole_id() {
+        return role_id;
+    }
+
+    public void setRole_id(String role_id) {
+        this.role_id = role_id;
+    }
+
+    public String getRole_name() {
+        return role_name;
+    }
+
+    public void setRole_name(String role_name) {
+        this.role_name = role_name;
+    }
+
     public RoleInfo() {
     }
 
