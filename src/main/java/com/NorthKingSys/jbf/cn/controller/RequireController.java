@@ -35,6 +35,7 @@ public class RequireController {
         BeanUtils.copyProperties(requireInfo,requireInfo1);
         requireInfo1.setCreatTime(new Date());
         requireInfo1.setNumber(requireNo);
+        requireInfo1.setStatus("0");//状态是"0"表示正常
         requireService.insertRequireInfo(requireInfo1);
         result.setCode(200);
         result.setData(requireNo);
@@ -67,7 +68,6 @@ public class RequireController {
     @PostMapping("/selectRequire")
     @ResponseBody
     public Result<?> selectRequire(@RequestBody JbfRequireInfo requireInfo){
-        List<JbfRequireInfo> requireInfoList;
         return ResultUtil.success(requireService.queryRequireInfo(requireInfo));
     }
 
@@ -89,7 +89,8 @@ public class RequireController {
     @ResponseBody
     public Result deleteRequire(@RequestBody JbfRequireInfo requireInfo){
         Result result = new Result();
-        int i = requireService.deleteByNumber(requireInfo.getNumber());
+        //状态是"1"表示删除
+        int i = requireService.deleteByNumber(requireInfo.getNumber(),"1");
         return result;
     }
 
@@ -101,8 +102,8 @@ public class RequireController {
     public Result selectRequireByCustName(@RequestBody JbfRequireInfo requireInfo){
         Result result = new Result();
         List<String> RequireList= requireService.selectRequireByCustName(requireInfo.getRequireCust());
+        result.setCode(200);
         if(RequireList.size()>0){
-            result.setCode(200);
             result.setData(RequireList);
         }
         return result;

@@ -9,7 +9,7 @@ import java.util.Map;
 
 @Mapper
 public interface JbfRequireInfoMapper {
-    int deleteByPrimaryKey(String number);
+    int updateStatusByNumber(Map map);
 
     int insert(JbfRequireInfo record);
 

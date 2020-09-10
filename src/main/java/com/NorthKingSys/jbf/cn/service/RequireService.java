@@ -50,8 +50,11 @@ public class RequireService {
         return jbfRequireInfoMapper.selectByPrimaryKey(number);
     }
 
-    public int deleteByNumber(String number){
-        return jbfRequireInfoMapper.deleteByPrimaryKey(number);
+    public int deleteByNumber(String number,String status){
+        Map map = new HashMap();
+        map.put("number",number);
+        map.put("status",status);
+        return jbfRequireInfoMapper.updateStatusByNumber(map);
     }
 
     public List<String> selectRequireByCustName(String custName){
