@@ -31,7 +31,8 @@ public class LogCostFilter implements Filter {
         HttpServletResponse response = (HttpServletResponse) servletResponse;
         Object usr=request.getSession().getAttribute("user");
         String requestURI = request.getRequestURI();
-        if (!requestURI.contains("tologin")) {
+        if (!requestURI.contains("tologin")&&!requestURI.contains("verifyCode")
+                &&!requestURI.contains("checkImageCode")) {
             //登出 生效
              if(requestURI.contains("logout")){
                 usr=null;
