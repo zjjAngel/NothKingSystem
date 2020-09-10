@@ -7,8 +7,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import org.springframework.stereotype.Component;
+import org.thymeleaf.util.StringUtils;
 
 import javax.servlet.*;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -29,24 +31,40 @@ public class LogCostFilter implements Filter {
         jedisUtil=(JedisUtil) SpringContextUtil.getBean("jedisUtil");
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
-        Object usr=request.getSession().getAttribute("user");
+        //前后端不分离的情况
+//        Object usr=request.getSession().getAttribute("user");
+        String sessionId = request.getHeader("sessionId");
+        //存入session的写法
+//        for (Cookie cookie : request.getCookies()) {
+//                if ("sessionId".equals(cookie.getName())) {
+//                    usr = cookie.getValue();
+//                    break;
+//                }
+//        }
+        //前后端分离
+        if (!StringUtils.isEmpty(sessionId)){
+            filterChain.doFilter(servletRequest, servletResponse);
+            return;
+        }
         String requestURI = request.getRequestURI();
         if (!requestURI.contains("tologin")&&!requestURI.contains("verifyCode")
                 &&!requestURI.contains("checkImageCode")) {
             //登出 生效
              if(requestURI.contains("logout")){
-                usr=null;
+//                usr=null;
                 jedisUtil.set(String.valueOf(request.getSession().getId()),null);
                 request.getSession().setAttribute("user",null);
                 loginOut(request,response,null);
             }
-            if(usr==null){
-                loginOrnot( request,  response, null);
-            }
+//            if(usr==null){
+//                loginOrnot( request,  response, null);
+//            }
+            Object usr=jedisUtil.get("sessionId");
             if (usr instanceof UserBack){
                 logger.warn("【登录校验密码是否过期】");
                 //无redis的情况下日期的处理
-                Object obj=jedisUtil.get(String.valueOf(request.getSession().getId()));
+//              Object obj=jedisUtil.get(String.valueOf(request.getSession().getId()));
+                UserBack obj= (UserBack) usr;
            if (obj==null){
                loginOrnot( request,  response, null);
              }else {

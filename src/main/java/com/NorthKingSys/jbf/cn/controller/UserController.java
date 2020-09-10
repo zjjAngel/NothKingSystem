@@ -12,6 +12,7 @@ import com.NorthKingSys.jbf.cn.mapper.UserInfoMapper;
 import com.NorthKingSys.jbf.cn.service.UserService;
 import com.NorthKingSys.jbf.cn.util.JedisUtil;
 import com.NorthKingSys.jbf.cn.util.ResultUtil;
+import com.alibaba.fastjson.JSONObject;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -73,7 +74,7 @@ public class UserController {
                     rslt = UsrPwdInfo.builder().user_name(String.valueOf(user_name))
                         .user_role(String.valueOf(user_role))
                         .user_id(String.valueOf(user_id)).sessionId(sessionId);
-                jedisUtil.set(sessionId,user_name, Long.valueOf(String.valueOf(effect_date)) ,TimeUnit.HOURS);
+                jedisUtil.set(sessionId, JSONObject.toJSON(rslt), Long.valueOf(String.valueOf(effect_date)) ,TimeUnit.HOURS);
             }else {
              throw new BusinessException("非法用户,同一用户名 密码的账号存在两个及其以上");
             }
