@@ -11,9 +11,10 @@
     <result column="REGION" jdbcType="VARCHAR" property="region" />
     <result column="RELATION_NAME" jdbcType="VARCHAR" property="relationName" />
     <result column="RELATE_MOBIL_NO" jdbcType="VARCHAR" property="relateMobilNo" />
+    <result column="CUST_STATUS" jdbcType="VARCHAR" property="custStatus" />
   </resultMap>
   <sql id="Base_Column_List">
-    ID, CUST_NO, CUST_NAME, COMPANY, MOBILE_NO, ADRESS, REGION, RELATION_NAME, RELATE_MOBIL_NO
+    ID, CUST_NO, CUST_NAME, COMPANY, MOBILE_NO, ADRESS, REGION, RELATION_NAME, RELATE_MOBIL_NO,CUST_STATUS
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select
@@ -65,6 +66,9 @@
       <if test="relateMobilNo != null">
         RELATE_MOBIL_NO,
       </if>
+      <if test="custStatus != null">
+        CUST_STATUS,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -94,6 +98,10 @@
       <if test="relateMobilNo != null">
         #{relateMobilNo,jdbcType=VARCHAR},
       </if>
+      <if test="custStatus != null">
+        #{custStatus,jdbcType=VARCHAR},
+      </if>
+
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.NorthKingSys.jbf.cn.domain.JbfCustInfo">
@@ -123,6 +131,9 @@
       <if test="relateMobilNo != null">
         RELATE_MOBIL_NO = #{relateMobilNo,jdbcType=VARCHAR},
       </if>
+      <if test="custStatus != null">
+        CUST_STATUS = #{custStatus,jdbcType=VARCHAR},
+      </if>
     </set>
     where CUST_NO = #{custNo,jdbcType=VARCHAR}
   </update>
@@ -139,11 +150,11 @@
     where CUST_NO = #{custNo,jdbcType=VARCHAR}
   </update>
   <!--add by zhujxd 20200902 新增客户信息查询-->
-  <select id="selectByClientInfo" resultType="com.NorthKingSys.jbf.cn.domain.JbfCustInfo">
+  <select id="selectByClientInfo" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
     from JBF_CUST_INFO
-    where 1=1
+    where CUST_STATUS = 'A'
     <if test="custname != null and custname != ''">
       and  CUST_NAME = #{custname,jdbcType=VARCHAR}
     </if>

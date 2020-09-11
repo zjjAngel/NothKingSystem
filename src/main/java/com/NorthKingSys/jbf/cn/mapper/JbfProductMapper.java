@@ -20,7 +20,7 @@ public interface JbfProductMapper {
 
     int updateByPrimaryKey(JbfProduct record);
 
-    List<ProjectInfo> getProductInfo(Map map);
+    List<JbfProduct> getProductInfo(Map map);
 
     String getMaxCustNo();
 
