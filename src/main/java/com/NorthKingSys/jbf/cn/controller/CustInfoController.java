@@ -92,6 +92,7 @@ public class CustInfoController {
         jbfCustInfo.setRegion(custInfo.getRegion());
         jbfCustInfo.setRelationName(custInfo.getRelationname());
         jbfCustInfo.setRelateMobilNo(custInfo.getRelatemobilNo());
+        jbfCustInfo.setCustStatus("A");
         int num =  jbfCustInfoMapper.insertSelective(jbfCustInfo);
         log.info("num的值是"+num);
         custInfo.setCustno(clientno);
@@ -128,8 +129,12 @@ public class CustInfoController {
     @PostMapping("/del")
     public BeanResult delClientInfo(@RequestBody  CustInfo custInfo){
 
-        Integer id = Integer.valueOf(custInfo.getCustno());
-        jbfCustInfoMapper.deleteByPrimaryKey(id);
+//        Integer id = Integer.valueOf(custInfo.getCustno());
+//        jbfCustInfoMapper.deleteByPrimaryKey(id);
+        JbfCustInfo jbfCustInfo = new JbfCustInfo();
+        jbfCustInfo.setCustNo(custInfo.getCustno());
+        jbfCustInfo.setCustStatus("E");
+        jbfCustInfoMapper.updateByPrimaryKeySelective(jbfCustInfo);
         return new BeanResult();
 
     }

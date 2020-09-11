@@ -7,10 +7,11 @@
     <result column="PROD_NAME" jdbcType="VARCHAR" property="prodName" />
     <result column="PROD_TYPE" jdbcType="VARCHAR" property="prodType" />
     <result column="START_TIME" jdbcType="TIMESTAMP" property="startTime" />
-    <result column="STATUS" jdbcType="INTEGER" property="status" />
+    <result column="STATUS" jdbcType="VARCHAR" property="status" />
+    <result column="PROD_STATUS" jdbcType="VARCHAR" property="prodStatus" />
   </resultMap>
   <sql id="Base_Column_List">
-    ID, PROD_NO, PROD_NAME, PROD_TYPE, START_TIME, STATUS
+    ID, PROD_NO, PROD_NAME, PROD_TYPE, START_TIME, STATUS,PROD_STATUS
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select
@@ -51,6 +52,9 @@
       <if test="status != null">
         STATUS,
       </if>
+      <if test="prodStatus != null">
+        PROD_STATUS,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -70,6 +74,9 @@
       </if>
       <if test="status != null">
         #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="prodStatus != null">
+        #{prodStatus,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -91,6 +98,9 @@
       <if test="status != null">
         STATUS = #{status,jdbcType=VARCHAR},
       </if>
+      <if test="prodStatus != null">
+        PROD_STATUS =  #{prodStatus,jdbcType=VARCHAR},
+      </if>
     </set>
     where PROD_NO = #{prodNo,jdbcType=VARCHAR}
   </update>
@@ -109,7 +119,7 @@
     select
     <include refid="Base_Column_List" />
     from JBF_PRODUCT
-    where  1=1
+    where  PROD_STATUS = 'A'
     <if test="prodname != null and prodname != ''">
       and  PROD_NAME = #{prodname,jdbcType=VARCHAR}
     </if>

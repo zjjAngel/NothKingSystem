@@ -19,6 +19,8 @@ public class JbfCustInfo {
 
     private String relateMobilNo;
 
+    private String custStatus;
+
     public Integer getId() {
         return id;
     }
@@ -89,5 +91,13 @@ public class JbfCustInfo {
 
     public void setRelateMobilNo(String relateMobilNo) {
         this.relateMobilNo = relateMobilNo == null ? null : relateMobilNo.trim();
+    }
+
+    public String getCustStatus() {
+        return custStatus;
+    }
+
+    public void setCustStatus(String custStatus) {
+        this.custStatus = custStatus;
     }
 }

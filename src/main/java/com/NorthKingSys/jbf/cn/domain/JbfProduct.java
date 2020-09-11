@@ -15,6 +15,8 @@ public class JbfProduct {
 
     private String status;
 
+    private String prodStatus;
+
     public Integer getId() {
         return id;
     }
@@ -61,5 +63,13 @@ public class JbfProduct {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getProdStatus() {
+        return prodStatus;
+    }
+
+    public void setProdStatus(String prodStatus) {
+        this.prodStatus = prodStatus;
     }
 }

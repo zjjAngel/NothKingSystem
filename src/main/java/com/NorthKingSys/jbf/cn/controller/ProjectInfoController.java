@@ -50,6 +50,7 @@ public class ProjectInfoController {
         jbfProduct.setProdType(projectInfo.getProdtype());
         jbfProduct.setStartTime(dateUtils.parse(projectInfo.getStarttime()));
         jbfProduct.setStatus(projectInfo.getStatus());
+        jbfProduct.setProdStatus("A");
         jbfProductMapper.insertSelective(jbfProduct);
         projectInfo.setProdno(prodno);
         return new BeanResult(projectInfo);
@@ -136,7 +137,13 @@ public class ProjectInfoController {
      */
     @PostMapping("/del")
     public BeanResult delProdInfo(@RequestBody  ProjectInfo projectInfo){
-        jbfProductMapper.deleteByPrimaryKey(projectInfo.getProdno());
+
+        JbfProduct jbfProduct = new JbfProduct();
+        jbfProduct.setProdNo(projectInfo.getProdno());
+        jbfProduct.setProdStatus("E");
+        //jbfProductMapper.deleteByPrimaryKey(projectInfo.getProdno());
+        jbfProductMapper.updateByPrimaryKeySelective(jbfProduct);
+
         return new BeanResult();
     }
 
