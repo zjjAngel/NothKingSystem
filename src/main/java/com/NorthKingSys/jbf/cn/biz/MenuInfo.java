@@ -21,4 +21,5 @@ public class MenuInfo {
     private Map menuIdNameRel;
     private List<Map>  menuIdNameRelList;
     private Map nextIdsMenu;
+    private String menu_parent_name;
 }

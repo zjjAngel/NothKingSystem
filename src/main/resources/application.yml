@@ -15,9 +15,9 @@ spring:
   application:
     name: NothKingSystem
   redis:
-    host: 192.168.42.143
+    host: 188.131.134.15
     password:
-    port: 6379
+    port: 6380
     database: 0
     jedis:
       pool:

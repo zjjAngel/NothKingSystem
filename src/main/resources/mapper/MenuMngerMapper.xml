@@ -49,8 +49,10 @@
     </update>
     <select id="selectIfexist" resultType="com.NorthKingSys.jbf.cn.biz.MenuInfo">
         select ID,MENU_ID,MENU_NAME,MENU_LEVEL,MENU_LEVEL_DESC,
-        MENU_LEVEL_PARENT,PATH,BACK_UP,STATUS
-        from JBF_MENU
+        MENU_LEVEL_PARENT,PATH,BACK_UP,STATUS,
+        (select b.Menu_name from JBF_MENU b
+        where b.MENU_ID=j.MENU_LEVEL_PARENT) as MENU_PARENT_NAME
+        from JBF_MENU j
         <where>
         <if test="MENU_ID!=null and MENU_ID!=''">
             MENU_ID=#{MENU_ID}

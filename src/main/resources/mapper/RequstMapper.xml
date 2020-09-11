@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.NorthKingSys.jbf.cn.mapper.RequstMapper">
+    <resultMap id="jbfRequireInfo" type="com.NorthKingSys.jbf.cn.domain.JbfRequireInfo">
+        <result column="POSITIONS" property="position" jdbcType="VARCHAR"/>
+        <result column="PRIORITY" property="priority" jdbcType="VARCHAR"/>
+    </resultMap>
+    <select id="queryPointWhere" resultMap="jbfRequireInfo">
+        select distinct POSITIONS from JBF_REQUIRE_INFO q
+        <where>
+            <if test="REQUIRE_CUST!=null">
+                q.REQUIRE_CUST=#{REQUIRE_CUST}
+            </if>
+            <if test="NUM_NO!=null">
+               and q.NUM_NO=#{NUM_NO}
+            </if>
+            <if test="PROJECT!=null">
+                and q.PROJECT=#{PROJECT}
+            </if>
+        </where>
+
+    </select>
+    <select id="queryProfile" resultType="java.lang.String">
+        select distinct PRIORITY from JBF_REQUIRE_INFO q
+        <where>
+            <if test="REQUIRE_CUST!=null">
+                q.REQUIRE_CUST=#{REQUIRE_CUST}
+            </if>
+            <if test="NUM_NO!=null">
+                and q.NUM_NO=#{NUM_NO}
+            </if>
+            <if test="PROJECT!=null">
+                and q.PROJECT=#{PROJECT}
+            </if>
+        </where>
+    </select>
+</mapper>

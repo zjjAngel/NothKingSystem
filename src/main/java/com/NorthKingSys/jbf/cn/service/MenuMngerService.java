@@ -14,6 +14,7 @@ import org.thymeleaf.util.StringUtils;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 public class MenuMngerService {
@@ -45,6 +46,7 @@ public class MenuMngerService {
                             String status,Integer pageSize,Integer pageNum){
         PageHelper.startPage(pageNum,pageSize);
         List<MenuInfo> menuInfos = menuMngerMapper.selectIfexist(menu_id, menuName, menu_level_parent, status);
+
         PageInfo<MenuInfo> pageInfo= new PageInfo<>(menuInfos);
         return pageInfo;
     }
