@@ -139,7 +139,7 @@
     where CUST_NO = #{custNo,jdbcType=VARCHAR}
   </update>
   <!--add by zhujxd 20200902 新增客户信息查询-->
-  <select id="selectByClientInfo" resultType="com.NorthKingSys.jbf.cn.domain.JbfCustInfo">
+  <select id="selectByClientInfo" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
     from JBF_CUST_INFO

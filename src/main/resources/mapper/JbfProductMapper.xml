@@ -104,7 +104,8 @@
     where ID = #{id,jdbcType=INTEGER}
   </update>
 
-  <select id="getProductInfo" resultType="com.NorthKingSys.jbf.cn.biz.ProjectInfo">
+  <!--<select id="getProductInfo" resultType="com.NorthKingSys.jbf.cn.biz.ProjectInfo">-->
+  <select id="getProductInfo"  resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
     from JBF_PRODUCT

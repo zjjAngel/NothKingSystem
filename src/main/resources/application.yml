@@ -1,23 +1,23 @@
 server:
-  port: 8089
+  port: 8088
 #  servlet:
 #    context-path: /api/NothKingSystem
 spring:
   thymeleaf:
     cache: false
   datasource:
-    #    url: jdbc:mysql://188.131.134.15:3306/jbf?characterEncoding=utf8&characterSetResults=utf8&autoReconnect=true&failOverReadOnly=false&serverTimezone=Asia/Shanghai
-    url: jdbc:mysql://192.168.42.143:3307/jbf?characterEncoding=utf8&characterSetResults=utf8&autoReconnect=true&failOverReadOnly=false&serverTimezone=Asia/Shanghai
-#    username: admin
-    username: root
-#    password: password123
-    password: 123456
+    url: jdbc:mysql://188.131.134.15:3306/jbf?characterEncoding=utf8&characterSetResults=utf8&autoReconnect=true&failOverReadOnly=false&serverTimezone=Asia/Shanghai
+  #  url: jdbc:mysql://192.168.42.143:3307/jbf?characterEncoding=utf8&characterSetResults=utf8&autoReconnect=true&failOverReadOnly=false&serverTimezone=Asia/Shanghai
+    username: admin
+   # username: root
+    password: password123
+  #  password: 123456
   application:
     name: NothKingSystem
   redis:
-    host: 192.168.42.143
+    host: 188.131.134.15
     password:
-    port: 6379
+    port: 6380
     database: 0
     jedis:
       pool:

@@ -25,5 +25,13 @@ public class DateUtils {
         return newDate;
     }
 
+    public String format(Date date)  {
+        if(date == null){
+            return null;
+        }
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        return simpleDateFormat.format(date);
+    }
+
 
 }

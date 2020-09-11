@@ -97,18 +97,18 @@ public class ProjectInfoController {
         map.put("status",projectInfo.getStatus());
 
         Page page =PageHelper.startPage(projectInfo.getPage(),projectInfo.getSize());
-        List<ProjectInfo> projectInfos = jbfProductMapper.getProductInfo(map);
+        List<JbfProduct> JbfProducts = jbfProductMapper.getProductInfo(map);
         int pages =  page.getPages(); // 总页数
         long total =  page.getTotal(); // 总条数
 
-        if(projectInfos != null && projectInfos.size()>0){
-            for (ProjectInfo projectInfo1 : projectInfos) {
+        if(JbfProducts != null && JbfProducts.size()>0){
+            for (JbfProduct JbfProduct1 : JbfProducts) {
                 ProjectInfo projectInfo2 = new ProjectInfo();
-                projectInfo2.setProdno(projectInfo1.getProdno());
-                projectInfo2.setProdname(projectInfo1.getProdname());
-                projectInfo2.setProdtype(projectInfo1.getProdtype());
-                projectInfo2.setStarttime(projectInfo1.getStarttime());
-                projectInfo2.setStatus(projectInfo1.getStatus());
+                projectInfo2.setProdno(JbfProduct1.getProdNo());
+                projectInfo2.setProdname(JbfProduct1.getProdName());
+                projectInfo2.setProdtype(JbfProduct1.getProdType());
+                projectInfo2.setStarttime(dateUtils.format(JbfProduct1.getStartTime()));
+                projectInfo2.setStatus(JbfProduct1.getStatus());
                 projectInfo2.setPage(projectInfo.getPage());
                 projectInfo2.setSize(page.getPageNum());
                 projectInfo2.setTotalpages(pages);
