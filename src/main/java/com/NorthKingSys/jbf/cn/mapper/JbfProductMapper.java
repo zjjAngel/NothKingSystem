@@ -24,4 +24,5 @@ public interface JbfProductMapper {
 
     String getMaxCustNo();
 
+    List<String> getJbfProdInfoName();
 }

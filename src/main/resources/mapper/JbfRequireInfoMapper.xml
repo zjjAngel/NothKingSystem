@@ -3,26 +3,26 @@
 <mapper namespace="com.NorthKingSys.jbf.cn.mapper.JbfRequireInfoMapper">
   <resultMap id="BaseResultMap" type="com.NorthKingSys.jbf.cn.domain.JbfRequireInfo">
     <id column="ID" jdbcType="INTEGER" property="id" />
-    <result column="NUM_NO" jdbcType="VARCHAR" property="number" />
+    <result column="NUM_NO" jdbcType="VARCHAR" property="numNo" />
     <result column="REQUIRE_CUST" jdbcType="VARCHAR" property="requireCust" />
     <result column="PROJECT" jdbcType="VARCHAR" property="project" />
     <result column="POSITIONS" jdbcType="VARCHAR" property="position" />
     <result column="REQURE_NUM" jdbcType="VARCHAR" property="requreNum" />
     <result column="REQUEST" jdbcType="VARCHAR" property="request" />
     <result column="PRIORITY" jdbcType="VARCHAR" property="priority" />
-    <result column="STUTAS" jdbcType="VARCHAR" property="stutas" />
+    <result column="REQUEST_STATUS" jdbcType="VARCHAR" property="requestStatus" />
     <result column="CREAT_TIME" jdbcType="TIMESTAMP" property="creatTime" />
     <result column="STATUS" jdbcType="VARCHAR" property="status" />
   </resultMap>
   <sql id="Base_Column_List">
-    ID, NUM_NO, REQUIRE_CUST, PROJECT, POSITIONS, REQURE_NUM, REQUEST, PRIORITY, STUTAS,
+    ID, NUM_NO, REQUIRE_CUST, PROJECT, POSITIONS, REQURE_NUM, REQUEST, PRIORITY, REQUEST_STATUS,
     CREAT_TIME, STATUS
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
     from JBF_REQUIRE_INFO
-    where NUM_NO = #{number,jdbcType=VARCHAR}
+    where NUM_NO = #{numNo,jdbcType=VARCHAR}
   </select>
 
   <select id="selectRequireCustInfo" resultType="java.lang.String">
@@ -56,22 +56,22 @@
       AND t.REQURE_NUM = #{requreNum}
     </if>
   </select>
-  <update id="updateStatusByNumber" parameterType="java.lang.String">
+  <update id="updateStatusBynumNo" parameterType="java.lang.String">
     update JBF_REQUIRE_INFO
     set
-    <if test="number != null">
+    <if test="numNo != null">
     STATUS = #{status,jdbcType=VARCHAR},
     </if>
-    where NUM_NO = #{number,jdbcType=VARCHAR}
+    where NUM_NO = #{numNo,jdbcType=VARCHAR}
   </update>
   <insert id="insert" parameterType="com.NorthKingSys.jbf.cn.domain.JbfRequireInfo">
     insert into JBF_REQUIRE_INFO (ID, NUM_NO, REQUIRE_CUST,
       PROJECT, POSITIONS, REQURE_NUM,
-      REQUEST, PRIORITY, STUTAS,
+      REQUEST, PRIORITY, REQUEST_STATUS,
       CREAT_TIME, STATUS)
-    values (#{id,jdbcType=INTEGER}, #{number,jdbcType=VARCHAR}, #{requireCust,jdbcType=VARCHAR},
+    values (#{id,jdbcType=INTEGER}, #{numNo,jdbcType=VARCHAR}, #{requireCust,jdbcType=VARCHAR},
       #{project,jdbcType=VARCHAR}, #{position,jdbcType=VARCHAR}, #{requreNum,jdbcType=VARCHAR},
-      #{request,jdbcType=VARCHAR}, #{priority,jdbcType=VARCHAR}, #{stutas,jdbcType=VARCHAR},
+      #{request,jdbcType=VARCHAR}, #{priority,jdbcType=VARCHAR}, #{requestStatus,jdbcType=VARCHAR},
       #{creatTime,jdbcType=DATE}, #{status,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.NorthKingSys.jbf.cn.domain.JbfRequireInfo">
@@ -80,7 +80,7 @@
       <if test="id != null">
         ID,
       </if>
-      <if test="number != null">
+      <if test="numNo != null">
         NUM_NO,
       </if>
       <if test="requireCust != null">
@@ -101,8 +101,8 @@
       <if test="priority != null">
         PRIORITY,
       </if>
-      <if test="stutas != null">
-        STUTAS,
+      <if test="requestStatus != null">
+        REQUEST_STATUS,
       </if>
       <if test="creatTime != null">
         CREAT_TIME,
@@ -115,8 +115,8 @@
       <if test="id != null">
         #{id,jdbcType=INTEGER},
       </if>
-      <if test="number != null">
-        #{number,jdbcType=VARCHAR},
+      <if test="numNo != null">
+        #{numNo,jdbcType=VARCHAR},
       </if>
       <if test="requireCust != null">
         #{requireCust,jdbcType=VARCHAR},
@@ -136,8 +136,8 @@
       <if test="priority != null">
         #{priority,jdbcType=VARCHAR},
       </if>
-      <if test="stutas != null">
-        #{stutas,jdbcType=VARCHAR},
+      <if test="requestStatus != null">
+        #{requestStatus,jdbcType=VARCHAR},
       </if>
       <if test="creatTime != null">
         #{creatTime,jdbcType=DATE},
@@ -150,8 +150,8 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.NorthKingSys.jbf.cn.domain.JbfRequireInfo">
     update JBF_REQUIRE_INFO
     <set>
-      <if test="number != null">
-        NUM_NO = #{number,jdbcType=VARCHAR},
+      <if test="numNo != null">
+        NUM_NO = #{numNo,jdbcType=VARCHAR},
       </if>
       <if test="requireCust != null">
         REQUIRE_CUST = #{requireCust,jdbcType=VARCHAR},
@@ -171,26 +171,35 @@
       <if test="priority != null">
         PRIORITY = #{priority,jdbcType=VARCHAR},
       </if>
-      <if test="stutas != null">
-        STUTAS = #{stutas,jdbcType=VARCHAR},
+      <if test="requestStatus != null">
+        REQUEST_STATUS = #{requestStatus,jdbcType=VARCHAR},
       </if>
       <if test="creatTime != null">
-        CREAT_TIME = #{creatTime,jdbcType=DATE}
+        CREAT_TIME = #{creatTime,jdbcType=DATE},
+      </if>
+      <if test="status != null">
+        STATUS = #{status,jdbcType=VARCHAR},
       </if>
     </set>
-    where NUM_NO = #{number,jdbcType=VARCHAR}
+    where NUM_NO = #{numNo,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.NorthKingSys.jbf.cn.domain.JbfRequireInfo">
     update JBF_REQUIRE_INFO
-    set NUM_NO = #{number,jdbcType=VARCHAR},
+    set NUM_NO = #{numNo,jdbcType=VARCHAR},
       REQUIRE_CUST = #{requireCust,jdbcType=VARCHAR},
       PROJECT = #{project,jdbcType=VARCHAR},
       POSITIONS = #{position,jdbcType=VARCHAR},
       REQURE_NUM = #{requreNum,jdbcType=VARCHAR},
       REQUEST = #{request,jdbcType=VARCHAR},
       PRIORITY = #{priority,jdbcType=VARCHAR},
-      STUTAS = #{stutas,jdbcType=VARCHAR},
+      REQUEST_STATUS = #{requestStatus,jdbcType=VARCHAR},
       CREAT_TIME = #{creatTime,jdbcType=DATE}
-    where where NUM_NO = #{number,jdbcType=VARCHAR}
+    where where NUM_NO = #{numNo,jdbcType=VARCHAR}
   </update>
+
+  <select id="getMaxRequireNo" parameterType="java.lang.String" resultType="java.lang.String">
+    SELECT a.NUM_NO from JBF_REQUIRE_INFO a where a.ID in (select MAX(ID) from JBF_REQUIRE_INFO)
+  </select>
+
+
 </mapper>

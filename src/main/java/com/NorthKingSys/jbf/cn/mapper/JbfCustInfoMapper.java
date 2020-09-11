@@ -21,4 +21,6 @@ public interface JbfCustInfoMapper {
     List<JbfCustInfo> selectByClientInfo(Map map);
 
     String getMaxCustNo();
+
+    List<String> getJbfCustInfoName();
 }

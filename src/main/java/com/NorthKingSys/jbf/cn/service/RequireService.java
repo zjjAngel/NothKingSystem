@@ -24,19 +24,19 @@ public class RequireService {
         jbfRequireInfoMapper.insertSelective(requireInfo);
     }
 
-    public PageInfo queryRequireInfo(JbfRequireInfo requireInfo){
-        PageHelper.startPage(requireInfo.getPageNum(),requireInfo.getPageSize());
-        Map<String,Object> map = new LinkedHashMap<String,Object>();
-        map.put("requreNum",requireInfo.getNumber());
-        map.put("position",requireInfo.getPosition());
-        map.put("project",requireInfo.getProject());
-        map.put("requireCust",requireInfo.getRequireCust());
-        /*map.put("startIndex",requireInfo.getPageIndex());
-        map.put("endIndex",requireInfo.getPageIndex()+);*/
-        List<JbfRequireInfo> requireInfoList= jbfRequireInfoMapper.selectRequireList(map);
-        PageInfo<JbfRequireInfo> pageInfo= new PageInfo<>(requireInfoList);
-        return pageInfo;
-    }
+//    public PageInfo queryRequireInfo(JbfRequireInfo requireInfo){
+//        PageHelper.startPage(requireInfo.getPageNum(),requireInfo.getPageSize());
+//        Map<String,Object> map = new LinkedHashMap<String,Object>();
+//        map.put("requreNum",requireInfo.getNumber());
+//        map.put("position",requireInfo.getPosition());
+//        map.put("project",requireInfo.getProject());
+//        map.put("requireCust",requireInfo.getRequireCust());
+//        /*map.put("startIndex",requireInfo.getPageIndex());
+//        map.put("endIndex",requireInfo.getPageIndex()+);*/
+//        List<JbfRequireInfo> requireInfoList= jbfRequireInfoMapper.selectRequireList(map);
+//        PageInfo<JbfRequireInfo> pageInfo= new PageInfo<>(requireInfoList);
+//        return pageInfo;
+//    }
 
     public List<String> queryRequireCust(){
         return jbfRequireInfoMapper.selectRequireCustInfo();
@@ -61,5 +61,9 @@ public class RequireService {
         Map map = new HashMap();
         map.put("custName",custName);
         return jbfRequireInfoMapper.selectRequireByCustName(map);
+    }
+
+    public String getMaxRequireNo(){
+        return jbfRequireInfoMapper.getMaxRequireNo();
     }
 }

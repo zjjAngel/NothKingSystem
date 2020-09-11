@@ -79,10 +79,7 @@ public class CustInfoController {
     @PostMapping("/add")
     public  BeanResult addCustInfo(@RequestBody CustInfo custInfo){
         String clientno = null;
-        String maxNo = getMaxCustNo();
-        int maxNo1 = Integer.valueOf(maxNo);
-        maxNo1++;
-        clientno = String.valueOf(maxNo1);
+        clientno = getMaxCustNo();
         JbfCustInfo jbfCustInfo = new JbfCustInfo();
         jbfCustInfo.setCustNo(clientno);
         jbfCustInfo.setCustName(custInfo.getCustname());
@@ -146,6 +143,9 @@ public class CustInfoController {
         if(maxCustNo == null){
             return maxCustNo = "100000";
         }else {
+            int maxNo1 = Integer.valueOf(maxCustNo);
+            maxNo1++;
+            maxCustNo = String.valueOf(maxNo1);
             return maxCustNo;
         }
     }

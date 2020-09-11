@@ -26,4 +26,6 @@ public interface JbfRequireInfoMapper {
     List<JbfRequireInfo> selectRequireList(Map map);
 
     List<String> selectRequireByCustName(Map map);
+
+    String getMaxRequireNo();
 }

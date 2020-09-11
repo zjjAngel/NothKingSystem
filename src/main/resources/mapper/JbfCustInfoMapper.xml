@@ -173,6 +173,11 @@
     SELECT a.CUST_NO from JBF_CUST_INFO a where a.ID in (select MAX(ID) from JBF_CUST_INFO)
   </select>
 
+  <select id="getJbfCustInfoName" parameterType="java.lang.String" resultType="java.lang.String">
+    SELECT a.CUST_NAME
+    from JBF_CUST_INFO a
+    where a.CUST_STATUS = 'A'
+  </select>
 
 
 </mapper>

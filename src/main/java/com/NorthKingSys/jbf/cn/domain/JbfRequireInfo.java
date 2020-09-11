@@ -5,7 +5,7 @@ import java.util.Date;
 public class JbfRequireInfo {
     private Integer id;
 
-    private String number;
+    private String numNo;
 
     private String requireCust;
 
@@ -19,15 +19,19 @@ public class JbfRequireInfo {
 
     private String priority;
 
-    private String stutas;
-
     private Date creatTime;
 
-    private int pageSize;
+    private String status;//招聘状态
 
-    private int pageNum;
+    private String requestStatus; // 纪录状态
 
-    private String status;//删除状态
+    public String getRequestStatus() {
+        return requestStatus;
+    }
+
+    public void setRequestStatus(String requestStatus) {
+        this.requestStatus = requestStatus;
+    }
 
     public String getStatus() {
         return status;
@@ -35,22 +39,6 @@ public class JbfRequireInfo {
 
     public void setStatus(String status) {
         this.status = status;
-    }
-
-    public int getPageSize() {
-        return pageSize;
-    }
-
-    public void setPageSize(int pageSize) {
-        this.pageSize = pageSize;
-    }
-
-    public int getPageNum() {
-        return pageNum;
-    }
-
-    public void setPageNum(int pageNum) {
-        this.pageNum = pageNum;
     }
 
     public Integer getId() {
@@ -61,12 +49,12 @@ public class JbfRequireInfo {
         this.id = id;
     }
 
-    public String getNumber() {
-        return number;
+    public String getNumNo() {
+        return numNo;
     }
 
-    public void setNumber(String number) {
-        this.number = number == null ? null : number.trim();
+    public void setNumNo(String numNo) {
+        this.numNo = numNo;
     }
 
     public String getRequireCust() {
@@ -117,13 +105,6 @@ public class JbfRequireInfo {
         this.priority = priority == null ? null : priority.trim();
     }
 
-    public String getStutas() {
-        return stutas;
-    }
-
-    public void setStutas(String stutas) {
-        this.stutas = stutas == null ? null : stutas.trim();
-    }
 
     public Date getCreatTime() {
         return creatTime;

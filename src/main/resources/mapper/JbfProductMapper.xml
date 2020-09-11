@@ -138,4 +138,11 @@
     SELECT a.PROD_NO from JBF_PRODUCT a where a.ID in (select MAX(ID) from JBF_PRODUCT)
   </select>
 
+  <select id="getJbfProdInfoName" resultType="java.lang.String">
+    SELECT a.PROD_NAME
+    from JBF_PRODUCT a
+    where a.PROD_STATUS  = 'A'
+  </select>
+
+
 </mapper>
