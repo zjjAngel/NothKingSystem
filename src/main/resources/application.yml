@@ -6,7 +6,7 @@ spring:
   thymeleaf:
     cache: false
   datasource:
-    url: jdbc:mysql://188.131.134.15:3306/jbf?characterEncoding=utf8&characterSetResults=utf8&autoReconnect=true&failOverReadOnly=false&serverTimezone=Asia/Shanghai
+    url: jdbc:mysql://146.56.216.173:3306/jbf?characterEncoding=utf8&characterSetResults=utf8&autoReconnect=true&failOverReadOnly=false&serverTimezone=Asia/Shanghai
   #  url: jdbc:mysql://192.168.42.143:3307/jbf?characterEncoding=utf8&characterSetResults=utf8&autoReconnect=true&failOverReadOnly=false&serverTimezone=Asia/Shanghai
     username: admin
    # username: root
@@ -15,9 +15,9 @@ spring:
   application:
     name: NothKingSystem
   redis:
-    host: 188.131.134.15
+    host: 146.56.216.173
     password:
-    port: 6380
+    port: 6379
     database: 0
     jedis:
       pool:
@@ -70,6 +70,7 @@ logging.level.com.NorthKingSys.jbf.cn.mapper : debug
 logging:
   level:
     com.jbf.jbfboot.Dao: DEBUG
+    com.NorthKingSys.jbf.cn.mapper : debug
 #配置redis
 #  spring.redis.host=localhost
 #  spring.redis.password=

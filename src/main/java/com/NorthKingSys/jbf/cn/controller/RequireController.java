@@ -1,6 +1,7 @@
 package com.NorthKingSys.jbf.cn.controller;
 
 import com.NorthKingSys.jbf.cn.biz.BeanResult;
+import com.NorthKingSys.jbf.cn.biz.CustInfo;
 import com.NorthKingSys.jbf.cn.biz.Result;
 import com.NorthKingSys.jbf.cn.domain.JbfRequireInfo;
 import com.NorthKingSys.jbf.cn.domain.JbfRequireModel;
@@ -46,18 +47,34 @@ public class RequireController {
         BeanResult out  = new BeanResult();
         String option = jbfRequireModel.getOption();
         //在需求管理界面 联动查询 客户信息+项目信息 供下拉列表使用
-
+        List<JbfRequireModel> jbfRequireModels1 = new ArrayList<>();
         if(option != null){
             // 查询所有已经录入的客户信息 （有效的）
             if(option.equals("01")){
                 List<String> custName = requireService.selectRequireCustName();
-                out.setData(custName);
+                if(custName!= null && custName.size()>0){
+                    for (int i = 0; i < custName.size(); i++) {
+                        JbfRequireModel jbfRequireModel1 = new JbfRequireModel();
+                        jbfRequireModel1.setRequireCust(custName.get(i));
+                        jbfRequireModels1.add(jbfRequireModel1);
+                    }
+                }
+                out.setData(jbfRequireModels1);
             }
             // 当时02请求时 根据选择的客户名称查询出 “项目名称”
             if(option.equals("02")){
                 if(jbfRequireModel.getRequireCust() != null && !jbfRequireModel.getRequireCust().equals("")){
                     List<String> list = requireService.selectRequireProject(jbfRequireModel.getRequireCust());
-                    out.setData(list);
+                    List<JbfRequireModel> jbfRequireModels2 = new ArrayList<>();
+                    if(list!= null && list.size()>0){
+                        for (int i = 0; i < list.size(); i++) {
+                            JbfRequireModel jbfRequireModel1 = new JbfRequireModel();
+                            jbfRequireModel1.setRequireCust(list.get(i));
+                            jbfRequireModels2.add(jbfRequireModel1);
+                        }
+                    }
+                    out.setData(jbfRequireModels2);
+
                 }
             }
 
@@ -102,16 +119,31 @@ public class RequireController {
     public BeanResult selectRequireByCustName(@RequestBody JbfRequireModel jbfRequireModel){
         BeanResult out  = new BeanResult();
         String option = jbfRequireModel.getOption();
+        List<CustInfo> custInfos = new ArrayList<>();
         if(option != null){
             // 查询所有的客户信息 （有效的）
             if(option.equals("01")){
              List<String> custName = jbfCustInfoService.getJbfCustInfoName();
-                out.setData(custName);
+                if(custName!= null && custName.size()>0){
+                    for (int i = 0; i < custName.size(); i++) {
+                        CustInfo custInfo = new CustInfo();
+                        custInfo.setCustname(custName.get(i));
+                        custInfos.add(custInfo);
+                    }
+                }
+                out.setData(custInfos);
              }
             // 当时02请求时 查询项目信息
             if(option.equals("02")){
                 List<String> list = jbfProdInfoService.getJbfCustInfoName();
-                out.setData(list);
+                if(list!= null && list.size()>0){
+                    for (int i = 0; i < list.size(); i++) {
+                        CustInfo custInfo = new CustInfo();
+                        custInfo.setCustname(list.get(i));
+                        custInfos.add(custInfo);
+                    }
+                }
+                out.setData(custInfos);
             }
         }
         return out;
