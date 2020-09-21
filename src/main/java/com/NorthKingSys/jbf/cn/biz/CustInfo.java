@@ -29,4 +29,6 @@ public class CustInfo {
 
     private long totalsize;
 
+    private String option;
+
 }

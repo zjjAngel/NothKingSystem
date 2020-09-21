@@ -23,4 +23,6 @@ public interface JbfCustInfoMapper {
     String getMaxCustNo();
 
     List<String> getJbfCustInfoName();
+
+    List<String> getJbfCompanyName(Map map);
 }

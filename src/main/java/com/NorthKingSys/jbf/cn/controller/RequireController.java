@@ -44,6 +44,8 @@ public class RequireController {
     @PostMapping("/selectRequire")
     @ResponseBody
     public BeanResult selectRequireForName(@RequestBody JbfRequireModel jbfRequireModel){
+
+        log.info("查询下拉列表："+jbfRequireModel.toString());
         BeanResult out  = new BeanResult();
         String option = jbfRequireModel.getOption();
         //在需求管理界面 联动查询 客户信息+项目信息 供下拉列表使用
@@ -69,7 +71,7 @@ public class RequireController {
                     if(list!= null && list.size()>0){
                         for (int i = 0; i < list.size(); i++) {
                             JbfRequireModel jbfRequireModel1 = new JbfRequireModel();
-                            jbfRequireModel1.setRequireCust(list.get(i));
+                            jbfRequireModel1.setProject(list.get(i));
                             jbfRequireModels2.add(jbfRequireModel1);
                         }
                     }
@@ -89,6 +91,8 @@ public class RequireController {
                                                                 jbfRequireModel.getPriority());
                 List<JbfRequireModel> jbfRequireModels = new ArrayList<>();
                 if(jbfRequireInfos != null && jbfRequireInfos.size()>0){
+
+
                     for (JbfRequireInfo jbfRequireInfo : jbfRequireInfos){
                         JbfRequireModel jbfRequireModel1 = new JbfRequireModel();
                         jbfRequireModel1.setNumNo(jbfRequireInfo.getNumNo()); //需求编号
@@ -103,6 +107,7 @@ public class RequireController {
                         jbfRequireModel1.setTotalsize(page.getTotal());
                         jbfRequireModels.add(jbfRequireModel1);
                     }
+
                 }
                 out.setData(jbfRequireModels);
                 }
