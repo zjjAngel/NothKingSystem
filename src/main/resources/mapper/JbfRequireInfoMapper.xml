@@ -42,18 +42,20 @@
   <select id="selectRequireList" parameterType="map" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
-    from JBF_REQUIRE_INFO t WHERE 1=1 AND STATUS='1'
+    from JBF_REQUIRE_INFO t
+    WHERE 1=1
+    AND REQUEST_STATUS='A'
     <if test="requireCust!= null">
-      AND t.REQUIRE_CUST like '%${requireCust}%'
+      AND t.REQUIRE_CUST  = #{requireCust,jdbcType=VARCHAR}
     </if>
     <if test="project != null">
-      AND t.PROJECT like '%${project}%'
+      AND t.PROJECT =  #{project,jdbcType=VARCHAR}
     </if>
     <if test="position != null">
-      AND t.POSITIONS like '%${position}%'
+      AND t.POSITIONS = #{position,jdbcType=VARCHAR}
     </if>
-    <if test="requreNum != null">
-      AND t.REQURE_NUM = #{requreNum}
+    <if test="priority != null">
+      AND t.PRIORITY = #{priority,jdbcType=VARCHAR}
     </if>
   </select>
   <update id="updateStatusBynumNo" parameterType="java.lang.String">
@@ -199,6 +201,18 @@
 
   <select id="getMaxRequireNo" parameterType="java.lang.String" resultType="java.lang.String">
     SELECT a.NUM_NO from JBF_REQUIRE_INFO a where a.ID in (select MAX(ID) from JBF_REQUIRE_INFO)
+  </select>
+  <!--查询已经录入“需求信息”中的 “客户信息”-->
+  <select id="selectRequireCustName" parameterType="java.lang.String" resultType="java.lang.String">
+   select  DISTINCT a.REQUIRE_CUST
+   from JBF_REQUIRE_INFO a where a.REQUEST_STATUS = 'A'
+  </select>
+  <!--查询已经录入“需求信息”中的 “项目信息”-->
+  <select id="selectRequireProject" parameterType="map" resultType="java.lang.String">
+   select  a.PROJECT
+   from JBF_REQUIRE_INFO a
+   where a.REQUEST_STATUS = 'A'
+   and REQUIRE_CUST = #{requireCust,jdbcType=VARCHAR}
   </select>
 
 

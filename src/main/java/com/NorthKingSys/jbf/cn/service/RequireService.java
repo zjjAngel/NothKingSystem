@@ -66,4 +66,24 @@ public class RequireService {
     public String getMaxRequireNo(){
         return jbfRequireInfoMapper.getMaxRequireNo();
     }
+
+
+    public List<String> selectRequireCustName(){
+        return jbfRequireInfoMapper.selectRequireCustName();
+    }
+
+    public List<String> selectRequireProject(String requireCust){
+        return jbfRequireInfoMapper.selectRequireProject(requireCust);
+    }
+
+    public List<JbfRequireInfo> selectRequireList(String requireCust,String project,String position,String priority){
+
+        Map map = new HashMap();
+        map.put("requireCust",requireCust);
+        map.put("project",project);
+        map.put("position",position);
+        map.put("priority",priority);
+        List<JbfRequireInfo> requireInfoList= jbfRequireInfoMapper.selectRequireList(map);
+        return requireInfoList;
+    }
 }

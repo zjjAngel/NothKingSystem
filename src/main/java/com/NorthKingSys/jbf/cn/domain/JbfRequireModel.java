@@ -32,4 +32,6 @@ public class JbfRequireModel {
 
     private String option;
 
+
+
 }

@@ -28,6 +28,51 @@ public class CustInfoController {
     JbfCustInfoMapper jbfCustInfoMapper;
 
 
+    @PostMapping("/queryForList")
+    public BeanResult queryCustInfoForList(@RequestBody CustInfo custInfo){
+        String option = custInfo.getOption();
+        List<CustInfo> custInfos = new ArrayList<>();
+        if(option != null && !option.equals("")){
+            // 01查询客户姓名下拉列表
+            if(option.equals("01")){
+                List<String>  custNames = jbfCustInfoMapper.getJbfCustInfoName();
+                if(custNames != null && custNames.size()>0){
+                    for (int i = 0; i < custNames.size(); i++) {
+                        CustInfo custInfo1 = new CustInfo();
+                        custInfo1.setCustname(custNames.get(i));
+                        custInfos.add(custInfo1);
+                    }
+                }
+            }
+            // 02查询 项目 下拉列表
+            if(option.equals("02")){
+                Map<String,Object> map = new HashMap();
+                map.put("custName",custInfo.getCustname());
+                List<String>  custCompanys = jbfCustInfoMapper.getJbfCompanyName(map);
+                if(custCompanys != null && custCompanys.size()>0){
+                    for (int i = 0; i < custCompanys.size(); i++) {
+                        CustInfo custInfo1 = new CustInfo();
+                        custInfo1.setCompany(custCompanys.get(i));
+                        custInfos.add(custInfo1);
+                    }
+                }
+            }
+            // 02查询 区域下拉列表
+            if(option.equals("03")){
+
+            }
+            // 04查询 维系人下拉列表
+            if(option.equals("04")){
+
+            }
+        }
+
+        return new BeanResult(custInfos);
+    }
+
+
+
+
 
     /**
      * 查询客户信息

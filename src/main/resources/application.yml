@@ -1,3 +1,5 @@
+server:
+  port: 8088
 #  servlet:
 #    context-path: /api/NothKingSystem
 spring:
@@ -45,7 +47,7 @@ pagehelper:
 #    druid:
 #      db-type: com.alibaba.druid.pool.DruidDataSource
 #      driver-class-name: com.mysql.cj.jdbc.Driver
-#      url: jdbc:mysql://146.56.200.9:3308/jbf?useUnicode=true&characterEncoding=utf8&autoReconnect=true&useSSL=false
+#      url: jdbc:mysql://192.168.42.143:3307/jbf?useUnicode=true&characterEncoding=utf8&autoReconnect=true&useSSL=false
 #      username: root
 #      password: 123456
 #      initial-size: 5
@@ -74,6 +76,7 @@ logging.level.com.NorthKingSys.jbf.cn.mapper : debug
 logging:
   level:
     com.jbf.jbfboot.Dao: DEBUG
+    com.NorthKingSys.jbf.cn.mapper : debug
 #配置redis
 #  spring.redis.host=localhost
 #  spring.redis.password=

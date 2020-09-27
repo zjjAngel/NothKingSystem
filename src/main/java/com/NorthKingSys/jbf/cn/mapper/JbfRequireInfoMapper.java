@@ -28,4 +28,10 @@ public interface JbfRequireInfoMapper {
     List<String> selectRequireByCustName(Map map);
 
     String getMaxRequireNo();
+
+    List<String> selectRequireCustName();
+
+    List<String> selectRequireProject(String requireCust);
+
+    //List<JbfRequireInfo> getJbfRequireInfo(Map map);
 }
