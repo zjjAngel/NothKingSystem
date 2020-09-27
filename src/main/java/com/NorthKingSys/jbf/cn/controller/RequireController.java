@@ -12,6 +12,8 @@ import com.NorthKingSys.jbf.cn.util.ResultUtil;
 import org.apache.log4j.Logger;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+//import org.springframework.cache.annotation.CacheConfig;
+//import org.springframework.cache.annotation.Cacheable;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -24,6 +26,7 @@ import java.util.Map;
  */
 @RestController
 @RequestMapping(value = "/require", method = RequestMethod.POST, produces = "application/json;charset=utf-8")
+//@CacheConfig(cacheNames = "emp")
 public class RequireController {
     @Autowired
     RequireService requireService;
@@ -39,6 +42,7 @@ public class RequireController {
      * @descition 查询一：查询需求客户信息 （提供给下拉列表）
      */
     @PostMapping("/selectRequire")
+//    @Cacheable(cacheNames = {"emp"})
     @ResponseBody
     public BeanResult selectRequire(@RequestBody JbfRequireModel jbfRequireModel){
         BeanResult out  = new BeanResult();

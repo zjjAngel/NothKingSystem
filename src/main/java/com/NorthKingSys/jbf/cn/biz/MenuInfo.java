@@ -20,6 +20,10 @@ public class MenuInfo {
     private String menu_ids;
     private Map menuIdNameRel;
     private List<Map>  menuIdNameRelList;
-    private Map nextIdsMenu;
+    private List<?> nextIdsMenu;
     private String menu_parent_name;
+    private String patch;
+    private boolean active;
+    private boolean grade;
+    private String name;
 }

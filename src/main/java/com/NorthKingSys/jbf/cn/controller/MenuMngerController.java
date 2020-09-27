@@ -73,5 +73,9 @@ public class MenuMngerController {
         return ResultUtil.success(menuMngerService.queryMenu(menu_id,menuName,
                 menu_level_parent,status,pageSize,pageNum)) ;
     }
+    @DeleteMapping("/deleteMenu")
+    public Result<?> deleteMenu( @RequestParam(value = "menu_id" ) String menu_id){
+        return ResultUtil.success(menuMngerService.deleteMenu(menu_id)) ;
+    }
 
 }

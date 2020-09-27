@@ -21,7 +21,9 @@
     <update id="modifyRoleMngMeNuInfo">
         update JBF_ROLE
         <set>
-            ROLE_NAME=#{roleName},
+           <if test="roleName!=null">
+               ROLE_NAME=#{roleName},
+           </if>
             <if test="back_up!=null">
              BACK_UP=#{back_up},
             </if>
@@ -86,6 +88,12 @@
     </resultMap>
     <select id="querySelect" resultMap="roleInfo">
          select r.role_id,r.role_name from JBF_ROLE r
+    </select>
+    <select id="selectRoleByMenuId" resultType="com.NorthKingSys.jbf.cn.domain.RoleInfo">
+            select r.role_id as ROLE_ID,FEIGN_IDS from JBF_ROLE r
+            <where>
+                r.FEIGN_IDS like "%"#{feign_ids,jdbcType=VARCHAR}"%"
+            </where>
     </select>
     <!--    <select id="queryUsrByRoleId" resultType="com.NorthKingSys.jbf.cn.domain.RoleInfo">-->
 <!--        -->

@@ -28,4 +28,6 @@ public interface RoleMngMeNuMapper {
      * @return
      */
     List<RoleInfo> querySelect();
-}
+
+    List<RoleInfo>  selectRoleByMenuId(@Param("feign_ids")String Menu_id);
+   }

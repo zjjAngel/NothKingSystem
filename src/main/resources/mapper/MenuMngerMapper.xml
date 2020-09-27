@@ -42,11 +42,20 @@
             <if test="STATUS!=null and STATUS!=''">
                 STATUS=#{STATUS},
             </if>
+            <if test="BACK_UP!=null">
+                BACK_UP=#{BACK_UP}
+            </if>
         </set>
         <where>
             MENU_ID=#{MENU_ID}
         </where>
     </update>
+    <delete id="deleteMenu">
+      delete from JBF_MENU
+      <where>
+          menu_id=#{menu_id}
+      </where>
+    </delete>
     <select id="selectIfexist" resultType="com.NorthKingSys.jbf.cn.biz.MenuInfo">
         select ID,MENU_ID,MENU_NAME,MENU_LEVEL,MENU_LEVEL_DESC,
         MENU_LEVEL_PARENT,PATH,BACK_UP,STATUS,
@@ -103,10 +112,13 @@
     </select>
     <select id="queryFirstMenu" resultType="com.NorthKingSys.jbf.cn.biz.MenuInfo">
         SELECT
-	t.MENU_ID,
+	t.MENU_ID ,
 	t.MENU_NAME,
 	t.MENU_LEVEL,
-  t.MENU_LEVEL_PARENT
+  t.MENU_LEVEL_PARENT,
+  t.path as patch,
+  'true' as active,
+  'false' as grade
 FROM
 	JBF_MENU t
 WHERE
@@ -121,10 +133,13 @@ WHERE
         SELECT d.*, c.MENU_NAME as Menu_parent_name	from
 (
 SELECT
-	b.MENU_ID,
-	b.MENU_NAME,
+	b.MENU_ID ,
+	b.MENU_NAME ,
 	b.MENU_LEVEL,
-	b.MENU_LEVEL_PARENT
+	b.MENU_LEVEL_PARENT,
+	b.path as patch,
+	'false' as active,
+	'false' as grade
 FROM
 	JBF_MENU b
 	where

@@ -22,4 +22,5 @@ public interface MenuMngerMapper {
     String  selectMenusName(@Param("MENU_ID") String mnInfo);
     List<MenuInfo> queryFirstMenu(@Param("list") List<String> list);
     List<MenuInfo> queryNextLevelData(@Param("menu_level")Integer menu_level,@Param("list") List<String> menu_ids);
+   int deleteMenu(@Param("menu_id")String menu_id);
 }

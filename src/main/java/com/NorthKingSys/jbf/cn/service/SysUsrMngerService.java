@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.concurrent.locks.ReentrantLock;
 
 @Service
 public class SysUsrMngerService {
@@ -63,6 +64,7 @@ public class SysUsrMngerService {
        PageHelper.startPage(pageNum,pageSize);
       List<UsrPwdInfo> lists=  sysUsrMngerMapper.queryUsrInfo(userId,roleId);
        PageInfo<UsrPwdInfo> pageInfo= new PageInfo<>(lists);
+//       ReentrantLock
        return pageInfo;
    }
    public Object querySelect(){

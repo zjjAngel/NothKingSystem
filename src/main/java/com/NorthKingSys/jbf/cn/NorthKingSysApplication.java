@@ -7,11 +7,13 @@ import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Bean;
 
 @SpringBootApplication
 @MapperScan("com.NorthKingSys.jbf.cn.mapper")
+@EnableCaching
 public class NorthKingSysApplication {
 	public static void main(String[] args) {
 		ConfigurableApplicationContext context = SpringApplication.run(NorthKingSysApplication.class, args);
