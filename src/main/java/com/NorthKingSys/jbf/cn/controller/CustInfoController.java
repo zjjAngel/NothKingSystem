@@ -18,7 +18,7 @@ import java.util.Map;
 
 
 @RestController
-@RequestMapping(value = "/cust", method = RequestMethod.POST, produces = "application/json;charset=utf-8")
+@RequestMapping(value = "/api/cust", method = RequestMethod.POST, produces = "application/json;charset=utf-8")
 public class CustInfoController {
     private static Logger log = Logger.getLogger(CustInfoController.class.getClass());
 

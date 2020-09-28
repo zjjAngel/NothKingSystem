@@ -24,7 +24,7 @@ import java.util.Map;
  * @version 1.0
  */
 @RestController
-@RequestMapping(value = "/project", method = RequestMethod.POST, produces = "application/json;charset=utf-8")
+@RequestMapping(value = "/api/project", method = RequestMethod.POST, produces = "application/json;charset=utf-8")
 public class ProjectInfoController {
     private static Logger log = Logger.getLogger(ProjectInfoController.class.getClass());
     @Autowired

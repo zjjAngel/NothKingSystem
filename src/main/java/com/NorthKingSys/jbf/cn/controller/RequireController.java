@@ -28,7 +28,7 @@ import java.util.Map;
  * @description 需求信息操作
  */
 @RestController
-@RequestMapping(value = "/require", method = RequestMethod.POST, produces = "application/json;charset=utf-8")
+@RequestMapping(value = "/api/require", method = RequestMethod.POST, produces = "application/json;charset=utf-8")
 //@CacheConfig(cacheNames = "emp")
 public class RequireController {
     @Autowired
