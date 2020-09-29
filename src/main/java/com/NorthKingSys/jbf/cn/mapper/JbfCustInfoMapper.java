@@ -25,4 +25,7 @@ public interface JbfCustInfoMapper {
     List<String> getJbfCustInfoName();
 
     List<String> getJbfCompanyName(Map map);
+
+    List<String> getJbfRelationName();
+
 }

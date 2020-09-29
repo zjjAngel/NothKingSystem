@@ -9,6 +9,8 @@ import lombok.Data;
 @Data
 public class ProjectInfo {
 
+    private String option;
+
     /**项目编号*/
 
     private String prodno;

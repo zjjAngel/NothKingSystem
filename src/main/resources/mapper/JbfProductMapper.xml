@@ -139,10 +139,18 @@
   </select>
 
   <select id="getJbfProdInfoName" resultType="java.lang.String">
-    SELECT a.PROD_NAME
+    SELECT  distinct a.PROD_NAME
     from JBF_PRODUCT a
     where a.PROD_STATUS  = 'A'
   </select>
+
+  <select id="getJbfProdType" resultType="java.lang.String">
+    SELECT distinct a.PROD_TYPE
+    from JBF_PRODUCT a
+    where a.PROD_STATUS  = 'A'
+  </select>
+
+
 
 
 </mapper>

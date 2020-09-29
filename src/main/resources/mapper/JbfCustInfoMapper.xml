@@ -174,10 +174,24 @@
   </select>
 
   <select id="getJbfCustInfoName" parameterType="java.lang.String" resultType="java.lang.String">
-    SELECT a.CUST_NAME
+    SELECT  distinct a.CUST_NAME
     from JBF_CUST_INFO a
     where a.CUST_STATUS = 'A'
   </select>
 
+  <select id="getJbfCompanyName" resultType="java.lang.String">
+    SELECT distinct a.COMPANY
+    from JBF_CUST_INFO a
+    where a.CUST_STATUS = 'A'
+    <if test="custname != null and custname != ''">
+      and  a.CUST_NAME = #{custname,jdbcType=VARCHAR}
+    </if>
+  </select>
+
+  <select id="getJbfRelationName" resultType="java.lang.String">
+    SELECT distinct a.RELATION_NAME
+    from JBF_CUST_INFO a
+    where a.CUST_STATUS = 'A'
+  </select>
 
 </mapper>

@@ -45,16 +45,16 @@
     from JBF_REQUIRE_INFO t
     WHERE 1=1
     AND REQUEST_STATUS='A'
-    <if test="requireCust!= null">
+    <if test="requireCust!= null and requireCust !=''">
       AND t.REQUIRE_CUST  = #{requireCust,jdbcType=VARCHAR}
     </if>
-    <if test="project != null">
+    <if test="project != null and project !='' ">
       AND t.PROJECT =  #{project,jdbcType=VARCHAR}
     </if>
-    <if test="position != null">
+    <if test="position != null and position !=''">
       AND t.POSITIONS = #{position,jdbcType=VARCHAR}
     </if>
-    <if test="priority != null">
+    <if test="priority != null and priority !=''">
       AND t.PRIORITY = #{priority,jdbcType=VARCHAR}
     </if>
   </select>
