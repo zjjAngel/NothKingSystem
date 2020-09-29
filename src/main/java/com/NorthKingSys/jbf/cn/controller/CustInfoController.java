@@ -44,11 +44,11 @@ public class CustInfoController {
                     }
                 }
             }
-            // 02查询 项目 下拉列表
+            // 02查询 公司 下拉列表
             if(option.equals("02")){
                 Map<String,Object> map = new HashMap();
-                map.put("custName",custInfo.getCustname());
-                List<String>  custCompanys = jbfCustInfoMapper.getJbfCompanyName(map);
+                map.put("custname",custInfo.getCustname());
+                List<String> custCompanys = jbfCustInfoMapper.getJbfCompanyName(map);
                 if(custCompanys != null && custCompanys.size()>0){
                     for (int i = 0; i < custCompanys.size(); i++) {
                         CustInfo custInfo1 = new CustInfo();
@@ -60,10 +60,21 @@ public class CustInfoController {
             // 02查询 区域下拉列表
             if(option.equals("03")){
 
+
+
+
             }
             // 04查询 维系人下拉列表
             if(option.equals("04")){
+                List<String> relationNames = jbfCustInfoMapper.getJbfRelationName();
 
+                if(relationNames != null && relationNames.size()>0){
+                    for (int i = 0; i < relationNames.size(); i++) {
+                        CustInfo custInfo1 = new CustInfo();
+                        custInfo1.setRelationname(relationNames.get(i));
+                        custInfos.add(custInfo1);
+                    }
+                }
             }
         }
 

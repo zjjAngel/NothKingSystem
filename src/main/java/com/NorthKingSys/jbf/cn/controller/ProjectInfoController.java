@@ -1,6 +1,7 @@
 package com.NorthKingSys.jbf.cn.controller;
 
 import com.NorthKingSys.jbf.cn.biz.BeanResult;
+import com.NorthKingSys.jbf.cn.biz.CustInfo;
 import com.NorthKingSys.jbf.cn.biz.Result;
 import com.NorthKingSys.jbf.cn.domain.JbfProduct;
 import com.NorthKingSys.jbf.cn.mapper.JbfProductMapper;
@@ -31,6 +32,50 @@ public class ProjectInfoController {
     JbfProductMapper jbfProductMapper;
     @Autowired
     DateUtils dateUtils;
+
+
+
+
+    @PostMapping("/queryForList")
+    public BeanResult queryCustInfoForList(@RequestBody ProjectInfo projectInfo){
+
+        // prodname
+        String option = projectInfo.getOption();
+        List<ProjectInfo> projectInfos = new ArrayList<>();
+        if(option != null && !option.equals("")) {
+            // 01查询项目名称下拉列表
+            if (option.equals("01")) {
+                List<String> prodNames = jbfProductMapper.getJbfProdInfoName();
+                if (prodNames != null && prodNames.size() > 0) {
+                    for (int i = 0; i < prodNames.size(); i++) {
+                        ProjectInfo projectInfo1 = new ProjectInfo();
+                        projectInfo1.setProdname(prodNames.get(i));
+                        projectInfos.add(projectInfo1);
+                    }
+                }
+            }
+
+            // prodtype
+            // 02查询 项目类型 下拉列表
+            if (option.equals("02")) {
+                List<String> prodTypes = jbfProductMapper.getJbfProdType();
+                if (prodTypes != null && prodTypes.size() > 0) {
+                    for (int i = 0; i < prodTypes.size(); i++) {
+                        ProjectInfo projectInfo1 = new ProjectInfo();
+                        projectInfo1.setProdtype(prodTypes.get(i));
+                        projectInfos.add(projectInfo1);
+                    }
+                }
+            }
+        }
+
+
+        return new BeanResult(projectInfos);
+    }
+
+
+
+
 
     /**
      * 新增项目
