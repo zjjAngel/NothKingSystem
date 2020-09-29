@@ -30,7 +30,7 @@ public class MenuMngerService {
         String path = String.valueOf(re.get("PATH"));//菜单路径
         String back_up = String.valueOf(re.get("BACK_UP"));//备注非必输
         String status = String.valueOf(re.get("STATUS"));//菜单状态\
-       return menuMngerMapper.insertMenu(menuId,menuName,Integer.valueOf(StringUtils.isEmpty(menu_level_parent)?"0":menu_level_parent),
+       return menuMngerMapper.insertMenu(menuId,menuName,StringUtils.isEmpty(menu_level_parent)?"0":menu_level_parent,
                 menu_level,path,back_up,status);
     }
     public Object updateMenuMngerInfo(String menuId,String menuName,
