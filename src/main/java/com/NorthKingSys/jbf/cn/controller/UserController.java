@@ -69,11 +69,12 @@ public class UserController {
                 Object user_role = res.get(0).get("user_Role");
                 Object user_id = res.get(0).get("user_id");
                 Object effect_date = res.get(0).get("effect_date");
+                Object role_name = res.get(0).get("role_name");
 //                effect_date
                 String sessionId = request.getSession().getId();
                     rslt = UsrPwdInfo.builder().user_name(String.valueOf(user_name))
                         .user_role(String.valueOf(user_role))
-                        .user_id(String.valueOf(user_id)).sessionId(sessionId);
+                        .user_id(String.valueOf(user_id)).sessionId(sessionId).role_name(String.valueOf(role_name));
                 jedisUtil.set(sessionId, JSONObject.toJSON(rslt), Long.valueOf(String.valueOf(effect_date)) ,TimeUnit.HOURS);
             }else {
              throw new BusinessException("非法用户,同一用户名 密码的账号存在两个及其以上");

@@ -41,13 +41,15 @@ public class UsrPwdInfo {
         return this;
     }
 
-    public UsrPwdInfo role_name(String role_name) {
-        this.role_name = role_name;
-        return this;
-    }
+
 
     public UsrPwdInfo password(String password) {
         this.password = password;
+        return this;
+    }
+
+    public UsrPwdInfo role_name(String role_name) {
+        this.role_name = role_name;
         return this;
     }
 
